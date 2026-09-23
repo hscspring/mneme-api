@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mneme-api"
-version = "0.1.0"
+version = "0.1.1"
 description = "Participant-hosted Add/Search API for Mneme"
 requires-python = ">=3.11"
 dependencies = [
-  "mnemekit[zh]==0.2.0",
+  "mnemekit[zh]==0.3.0",
   "spacy>=3.8,<3.9",
   "fastapi>=0.115,<1",
   "uvicorn>=0.30,<1",

@@ -2,7 +2,7 @@
 
 A standalone Add/Search service for [Mneme](https://pypi.org/project/mnemekit/), compatible with the [Agent Memory Leaderboard API](https://agentmemoryleaderboard.ai/api-guide).
 
-The service installs `mnemekit==0.2.0` from PyPI and calls its public interfaces. It does not import a research checkout, modify Mneme, or implement extraction, scoring, or reranking. Research-only v2 features are not part of this release.
+The service installs `mnemekit==0.3.0` from PyPI and calls its public interfaces. It does not import a research checkout, modify Mneme, or implement extraction, scoring, or reranking. Mneme 0.3.0 adds linguistic propositions and memory organization. This API continues to call `Memory.recall()`; it does not enable `recall_ontology()` or `recall_cards()`. Research-only ActivationField experiments are not imported.
 
 ## Install and start
 
@@ -25,6 +25,22 @@ The lock file records the tested Python 3.13 environment, including the English 
 Use a local disk for `MNEME_DATA_DIR`. Both environment variables are required. Startup checks the English model and initializes the package extractor. Chinese segmentation is included via `mnemekit[zh]`.
 
 Place the service behind your HTTPS reverse proxy for public evaluation. The command above binds only to localhost. Submit the public `/add`, `/search`, and `/health` URLs and choose Bearer authentication. The service key is distinct from the platform-issued Eval Key. Public deployment and Full submission are separate from local installation.
+
+## Upgrade to mnemekit 0.3.0
+
+API release 0.1.1 requires updating both this repository and the installed package: the startup compiler import changed in Mneme 0.3.0. In the deployment's existing virtual environment:
+
+```bash
+git pull --ff-only
+python -m pip install --index-url https://pypi.org/simple -r requirements.lock
+python -m pip install --index-url https://pypi.org/simple -e '.[evaluation,test]'
+python -m pytest -q
+python -c "from importlib.metadata import version; print(version('mnemekit'))"
+```
+
+The last command must print `0.3.0`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before the next platform Smoke. The HTTP contract and launch command are unchanged.
+
+Old 0.2.0 turns remain readable; upgrading does not retroactively extract propositions for existing records. New writes use the 0.3.0 compiler. Use fresh evaluation user IDs for a consistently ingested new-version run. Do not change the deployed version during an active platform evaluation.
 
 ## API
 

@@ -7,7 +7,7 @@ from typing import AsyncIterator
 import spacy
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from mneme.extract import TagExtractor
+from mneme.extract import LinguisticCompiler
 
 from mneme_api.api import MemoryService, RequestConflict
 from mneme_api.router import router
@@ -23,12 +23,12 @@ def create_app() -> FastAPI:
             raise ValueError("MNEME_API_KEY must not be empty")
         if not spacy.util.is_package("en_core_web_sm"):
             raise RuntimeError("Install en_core_web_sm before starting the API")
-        TagExtractor()("Memory service initialization", "user")
+        LinguisticCompiler()("Memory service initialization", "user")
         app.state.api_key = key
         app.state.memory = MemoryService(Path(os.environ["MNEME_DATA_DIR"]))
         yield
 
-    app = FastAPI(title="Mneme API", version="0.1.0", lifespan=lifespan)
+    app = FastAPI(title="Mneme API", version="0.1.1", lifespan=lifespan)
     app.include_router(router)
     app.add_exception_handler(RequestConflict, conflict)
     app.add_exception_handler(Exception, failure)
