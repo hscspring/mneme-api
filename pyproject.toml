@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mneme-api"
+version = "0.1.0"
+description = "Participant-hosted Add/Search API for Mneme"
+requires-python = ">=3.11"
+dependencies = [
+  "mnemekit[zh]==0.2.0",
+  "spacy>=3.8,<3.9",
+  "fastapi>=0.115,<1",
+  "uvicorn>=0.30,<1",
+]
+
+[project.optional-dependencies]
+evaluation = ["httpx>=0.27,<1"]
+test = ["httpx>=0.27,<1", "pytest>=8,<10"]
+
+[tool.setuptools.packages.find]
+include = ["mneme_api*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
