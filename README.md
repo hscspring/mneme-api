@@ -24,7 +24,7 @@ The lock file records the tested Python 3.13 environment, including the English 
 
 Use a local disk for `MNEME_DATA_DIR`. Both environment variables are required. Startup checks the English model and initializes the package extractor. Chinese segmentation is included via `mnemekit[zh]`.
 
-Place the service behind your HTTPS reverse proxy for public evaluation. The command above binds only to localhost. Submit the public `/add`, `/search`, and `/health` URLs and choose Bearer authentication. The service key is distinct from the platform-issued Eval Key. Public deployment and Full submission are separate from local installation.
+Place the service behind your HTTPS reverse proxy for public evaluation. The command above binds only to localhost. Submit the public `/add`, `/search`, and `/health` URLs and choose Token, Bearer, or X-Api-Key authentication. The service key is distinct from the platform-issued Eval Key. Public deployment and Full submission are separate from local installation.
 
 ## Upgrade to mnemekit 0.3.0
 
@@ -44,7 +44,7 @@ Old 0.2.0 turns remain readable; upgrading does not retroactively extract propos
 
 ## API
 
-`GET /health` is unauthenticated. `POST /add` and `POST /search` require `Authorization: Bearer <MNEME_API_KEY>`.
+`GET /health` is unauthenticated. `POST /add` and `POST /search` accept `Authorization: Bearer <MNEME_API_KEY>`, `Authorization: Token <MNEME_API_KEY>`, or `X-Api-Key: <MNEME_API_KEY>`. All three use the same service key. Match the scheme selected in your AML application. API 0.1.2 adds Token and X-Api-Key support; older deployments accept only Bearer.
 
 Add request:
 

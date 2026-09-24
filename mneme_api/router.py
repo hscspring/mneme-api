@@ -2,21 +2,22 @@ import secrets
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.security.http import HTTPAuthorizationCredentials, HTTPBase
 
 from mneme_api.data_model import AddRequest, AddResponse, SearchRequest, SearchResponse
 
 router = APIRouter()
-bearer = HTTPBearer(auto_error=False)
+authorization = HTTPBase(scheme="bearer", auto_error=False)
 
 
 def authenticate(
     request: Request,
-    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer)],
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(authorization)],
 ) -> None:
-    if credentials is None or not secrets.compare_digest(
-        credentials.credentials.encode(), request.app.state.api_key.encode()
-    ):
+    key = request.headers.get("X-Api-Key", "")
+    if credentials is not None:
+        key = credentials.credentials if credentials.scheme.lower() in {"bearer", "token"} else ""
+    if not key or not secrets.compare_digest(key.encode(), request.app.state.api_key.encode()):
         raise HTTPException(status_code=401, detail="Invalid API key", headers={"WWW-Authenticate": "Bearer"})
 
 

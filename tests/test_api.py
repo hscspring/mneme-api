@@ -11,11 +11,16 @@ from mneme_api.api import MemoryService
 from mneme_api.data_model import AddRequest, SearchRequest
 
 
-def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.parametrize("header,value", [
+    ("Authorization", "Bearer local-test-key"),
+    ("Authorization", "Token local-test-key"),
+    ("X-Api-Key", "local-test-key"),
+])
+def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, header: str, value: str) -> None:
     root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
     monkeypatch.setenv("MNEME_API_KEY", "local-test-key")
     monkeypatch.setenv("MNEME_DATA_DIR", str(root))
-    headers = {"Authorization": "Bearer local-test-key"}
+    headers = {header: value}
     payload = {
         "request_id": "request:/1",
         "user_id": "user:/one",
@@ -29,6 +34,7 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch) -> N
     with TestClient(create_app()) as client:
         assert client.get("/health").status_code == 200
         assert client.post("/add", json=payload).status_code == 401
+        assert client.post("/add", json=payload, headers={header: value + "-wrong"}).status_code == 401
         assert client.post("/add", json=payload, headers=headers).json() == {
             "success": True, **{key: payload[key] for key in ("request_id", "user_id", "session_id")}
         }
