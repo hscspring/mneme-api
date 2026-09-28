@@ -2,7 +2,7 @@
 
 A standalone Add/Search service for [Mneme](https://pypi.org/project/mnemekit/), compatible with the [Agent Memory Leaderboard API](https://agentmemoryleaderboard.ai/api-guide).
 
-The service installs `mnemekit==0.3.0` from PyPI and calls its public interfaces. It does not import a research checkout, modify Mneme, or implement extraction, scoring, or reranking. Mneme 0.3.0 adds linguistic propositions and memory organization. This API continues to call `Memory.recall()`; it does not enable `recall_ontology()` or `recall_cards()`. Research-only ActivationField experiments are not imported.
+The service installs `mnemekit==0.3.1` from PyPI and calls its public interfaces. Search uses `Memory.search_evidence()` with the package's default TAG projection. It does not import a research checkout, modify Mneme, or implement extraction, projection, scoring, or reranking.
 
 ## Install and start
 
@@ -26,9 +26,9 @@ Use a local disk for `MNEME_DATA_DIR`. Both environment variables are required. 
 
 Place the service behind your HTTPS reverse proxy for public evaluation. The command above binds only to localhost. Submit the public `/add`, `/search`, and `/health` URLs and choose Token, Bearer, or X-Api-Key authentication. The service key is distinct from the platform-issued Eval Key. Public deployment and Full submission are separate from local installation.
 
-## Upgrade to mnemekit 0.3.0
+## Upgrade to mnemekit 0.3.1
 
-API release 0.1.1 requires updating both this repository and the installed package: the startup compiler import changed in Mneme 0.3.0. In the deployment's existing virtual environment:
+API release 0.1.3 requires updating both this repository and the installed package: `search_evidence()` requires Mneme 0.3.1. In the deployment's existing virtual environment:
 
 ```bash
 git pull --ff-only
@@ -38,9 +38,9 @@ python -m pytest -q
 python -c "from importlib.metadata import version; print(version('mnemekit'))"
 ```
 
-The last command must print `0.3.0`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before the next platform Smoke. The HTTP contract and launch command are unchanged.
+The last command must print `0.3.1`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before the next platform Smoke. The HTTP contract and launch command are unchanged.
 
-Old 0.2.0 turns remain readable; upgrading does not retroactively extract propositions for existing records. New writes use the 0.3.0 compiler. Use fresh evaluation user IDs for a consistently ingested new-version run. Do not change the deployed version during an active platform evaluation.
+Old 0.2.0 turns remain readable; upgrading does not retroactively extract propositions for existing records. New writes use the installed package compiler. Use fresh evaluation user IDs for a consistently ingested new-version run. Do not change the deployed version during an active platform evaluation.
 
 ## API
 
@@ -68,14 +68,14 @@ Search request:
 {"user_id": "example:user:0", "query": "What breed is Lucky?", "top_k": 100}
 ```
 
-Search returns `{"data": [{"id": "...", "content": "...", "created_at": "..."}]}`. Content includes source time, role, and the full original message. Results preserve Mneme's order. Optional `options` are accepted but do not alter the query. Scores are omitted because the public `Memory.recall()` interface returns turns, not scores. No matches produce `{"data": []}`.
+Search returns `{"data": [{"id": "...", "content": "...", "created_at": "..."}]}`. Each result represents one core EvidenceItem. Content includes its tag label and every span in core order, with source ID, UTC time, role, and text. Spans may be segments rather than whole original messages. `created_at` is the earliest span timestamp; each span retains its own time in content. Results preserve Mneme's ranking; scores are omitted. Optional `options` are accepted but do not alter the query. No matches produce `{"data": []}`.
 
 ## Memory semantics
 
 - Each `user_id` has a separate hashed directory and Mneme store. Search spans that user's sessions only.
 - Each source `session_id` maps to a stable Event through the public `event_id` argument. Messages stay in source order within each Add. Concurrent Adds for one user are serialized in lock-acquisition order; callers should submit chunks for one session sequentially.
 - Each message becomes one turn: user content occupies `query`, assistant content occupies `response`. This preserves roles without inventing user/assistant pairs across request boundaries.
-- Search calls `Memory.recall(query, topn=top_k)` with the published default behavior: lexical recall, `assoc_n=0`. This is a service baseline, not the research paper's configured hybrid retrieval.
+- Search calls `Memory.search_evidence(query, topn=top_k)` with default TAG projection. Top-K is applied by Mneme after projection and counts evidence items, not turns or spans. The API does not deduplicate or truncate spans; TAG_DEDUP is not enabled. Platform Answer context limits still apply.
 - Request IDs are scoped to users. The same ID and validated payload is idempotent; a different payload returns 409.
 
 The package writes multiple JSON files without a transaction. A per-user SQLite request journal records each accepted Add before invoking Mneme. If a write is interrupted, the next Add/Search rebuilds that user's store in a new generation by replaying the journal through `Memory.remember()`, then switches the active generation. Recovery errors return 503; partially written generations are never searched. This handles process interruptions, not a guarantee against storage failure or machine power loss.

@@ -56,19 +56,19 @@ class MemoryService:
         with self._user(request.user_id) as (directory, db):
             self._recover(directory, db)
             memory = self._memory(directory, db)
-            turns = memory.recall(request.query, topn=request.top_k)
+            items = memory.search_evidence(request.query, topn=request.top_k)
             evidence = []
-            for turn in turns:
-                timestamp = datetime.fromtimestamp(turn.ts, timezone.utc).isoformat()
-                content = "\n".join(
-                    f"{role}: {text}"
-                    for role, text in (("user", turn.query), ("assistant", turn.response))
-                    if text
-                )
+            for item in items:
+                parts = [f"[tag: {item.label}]"] if item.label else []
+                for span in item.spans:
+                    timestamp = datetime.fromtimestamp(span.timestamp, timezone.utc).isoformat()
+                    parts.append(f"[{timestamp}] [source: {span.source_id}]\n{span.role}: {span.text}")
                 evidence.append(Evidence(
-                    id=turn.id,
-                    content=f"[{timestamp}]\n{content}",
-                    created_at=timestamp,
+                    id=item.id,
+                    content="\n".join(parts),
+                    created_at=datetime.fromtimestamp(
+                        min(span.timestamp for span in item.spans), timezone.utc,
+                    ).isoformat(),
                 ))
         return SearchResponse(data=evidence)
 

@@ -44,7 +44,13 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
         assert client.post("/add", json=payload, headers=headers).status_code == 200
         assert client.post("/search", json=query, headers=headers).json() == expected
         assert client.post("/search", json={**query, "user_id": "other"}, headers=headers).json() == {"data": []}
-        assert len(client.post("/search", json={**query, "top_k": 1}, headers=headers).json()["data"]) == 1
+        grouped = client.post("/search", json={**query, "query": "Lucky", "top_k": 1}, headers=headers).json()["data"]
+        assert len(grouped) == 1
+        assert "user: My dog Lucky" in grouped[0]["content"]
+        assert "assistant: Lucky" in grouped[0]["content"]
+        assert "2024-01-01T00:00:00+00:00" in grouped[0]["content"]
+        assert "2024-01-01T00:00:01+00:00" in grouped[0]["content"]
+        assert grouped[0]["content"].count("[source: ") == 2
         assert client.post("/add", json={**payload, "session_id": "changed"}, headers=headers).status_code == 409
 
     with TestClient(create_app(), raise_server_exceptions=False) as client:
@@ -69,8 +75,10 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
             assert client.post("/add", json=interrupted, headers=headers).status_code == 503
         assert client.post("/add", json=interrupted, headers=headers).status_code == 200
         results = client.post("/search", json=query, headers=headers).json()["data"]
-        assert len(results) == 4
-        assert len({item["id"] for item in results}) == 4
+        assert len({item["id"] for item in results}) == len(results)
+        content = "\n".join(item["content"] for item in results)
+        assert "Lucky visited Paris." in content
+        assert "Lucky visited London too." in content
         assert client.post("/add", json=payload, headers=headers).status_code == 200
 
 
@@ -89,5 +97,6 @@ def test_concurrent_user_writes() -> None:
         for future in futures:
             assert future.result().success
     result = MemoryService(root).search(SearchRequest(user_id="shared", query="Lucky", top_k=100))
-    assert len(result.data) == 4
-    assert len({item.id for item in result.data}) == 4
+    assert len(result.data) == 1
+    for index in range(4):
+        assert f"Lucky visited city number {index}." in result.data[0].content
