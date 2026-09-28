@@ -2,7 +2,7 @@
 
 A standalone Add/Search service for [Mneme](https://pypi.org/project/mnemekit/), compatible with the [Agent Memory Leaderboard API](https://agentmemoryleaderboard.ai/api-guide).
 
-The service installs `mnemekit==0.3.1` from PyPI and calls its public interfaces. Search uses `Memory.search_evidence()` with the package's default TAG projection. It does not import a research checkout, modify Mneme, or implement extraction, projection, scoring, or reranking.
+The service installs `mnemekit==0.4.0` from PyPI and calls its public interfaces. Search uses `Memory.search_evidence()` with the package's default evidence projection. It does not import a research checkout, modify Mneme, or implement extraction, projection, scoring, or reranking.
 
 ## Install and start
 
@@ -26,9 +26,9 @@ Use a local disk for `MNEME_DATA_DIR`. Both environment variables are required. 
 
 Place the service behind your HTTPS reverse proxy for public evaluation. The command above binds only to localhost. Submit the public `/add`, `/search`, and `/health` URLs and choose Token, Bearer, or X-Api-Key authentication. The service key is distinct from the platform-issued Eval Key. Public deployment and Full submission are separate from local installation.
 
-## Upgrade to mnemekit 0.3.1
+## Upgrade to mnemekit 0.4.0
 
-API release 0.1.3 requires updating both this repository and the installed package: `search_evidence()` requires Mneme 0.3.1. In the deployment's existing virtual environment:
+API release 0.1.4 requires updating both this repository and the installed package. In the deployment's existing virtual environment:
 
 ```bash
 git pull --ff-only
@@ -38,7 +38,7 @@ python -m pytest -q
 python -c "from importlib.metadata import version; print(version('mnemekit'))"
 ```
 
-The last command must print `0.3.1`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before the next platform Smoke. The HTTP contract and launch command are unchanged.
+The last command must print `0.4.0`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before the next platform Smoke. The HTTP contract and launch command are unchanged.
 
 Old 0.2.0 turns remain readable; upgrading does not retroactively extract propositions for existing records. New writes use the installed package compiler. Use fresh evaluation user IDs for a consistently ingested new-version run. Do not change the deployed version during an active platform evaluation.
 
@@ -75,7 +75,7 @@ Search returns `{"data": [{"id": "...", "content": "...", "created_at": "..."}]}
 - Each `user_id` has a separate hashed directory and Mneme store. Search spans that user's sessions only.
 - Each source `session_id` maps to a stable Event through the public `event_id` argument. Messages stay in source order within each Add. Concurrent Adds for one user are serialized in lock-acquisition order; callers should submit chunks for one session sequentially.
 - Each message becomes one turn: user content occupies `query`, assistant content occupies `response`. This preserves roles without inventing user/assistant pairs across request boundaries.
-- Search calls `Memory.search_evidence(query, topn=top_k)` with default TAG projection. Top-K is applied by Mneme after projection and counts evidence items, not turns or spans. The API does not deduplicate or truncate spans; TAG_DEDUP is not enabled. Platform Answer context limits still apply.
+- Search calls `Memory.search_evidence(query, topn=top_k)` without an explicit projection, so Mneme 0.4.0 uses its new default. Top-K is applied by Mneme after projection and counts evidence items, not turns or spans. The API does not deduplicate or truncate spans. Platform Answer context limits still apply.
 - Request IDs are scoped to users. The same ID and validated payload is idempotent; a different payload returns 409.
 
 The package writes multiple JSON files without a transaction. A per-user SQLite request journal records each accepted Add before invoking Mneme. If a write is interrupted, the next Add/Search rebuilds that user's store in a new generation by replaying the journal through `Memory.remember()`, then switches the active generation. Recovery errors return 503; partially written generations are never searched. This handles process interruptions, not a guarantee against storage failure or machine power loss.
