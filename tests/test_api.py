@@ -39,7 +39,8 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
             "success": True, **{key: payload[key] for key in ("request_id", "user_id", "session_id")}
         }
         expected = client.post("/search", json=query, headers=headers).json()
-        assert len(expected["data"]) == 2
+        assert len(expected["data"]) == 1
+        assert expected["data"][0]["content"].count("[source: ") == 2
         assert any("assistant: Lucky" in item["content"] for item in expected["data"])
         assert client.post("/add", json=payload, headers=headers).status_code == 200
         assert client.post("/search", json=query, headers=headers).json() == expected
