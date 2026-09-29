@@ -6,4 +6,5 @@ __pycache__/
 .pytest_cache/
 .runtime/
 results/
+requests.jsonl
 *.env
