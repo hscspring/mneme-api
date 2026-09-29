@@ -80,6 +80,8 @@ Search returns `{"data": [{"id": "...", "content": "...", "created_at": "..."}]}
 
 The package writes multiple JSON files without a transaction. A per-user SQLite request journal records each accepted Add before invoking Mneme. If a write is interrupted, the next Add/Search rebuilds that user's store in a new generation by replaying the journal through `Memory.remember()`, then switches the active generation. Recovery errors return 503; partially written generations are never searched. This handles process interruptions, not a guarantee against storage failure or machine power loss.
 
+Each successful Search appends a diagnostic record to `MNEME_DATA_DIR/search-metrics.jsonl`. It records item, span, response-token and evidence-token counts; request-history size; load, search and formatting latency; complete source IDs within the first 100,000 evidence tokens; and source IDs on the boundary item. Token counts use `o200k_base`. The log contains no query or memory text. It measures the returned evidence payload only because platform prompt and question tokens are not visible to this API.
+
 Per-user file locks cover Add, Search, and recovery across local processes. Each operation reloads the current store, avoiding stale worker state. This prioritizes correctness; loading latency grows with user history. Capacity must be measured before Full. There is no automatic deletion: journals and superseded recovery generations contain evaluation data and require retention management by the operator.
 
 ## Local verification

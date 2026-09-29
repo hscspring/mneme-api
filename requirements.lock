@@ -32,6 +32,7 @@ pydantic-core==2.46.5
 pygments==2.21.0
 pytest==9.1.1
 requests==2.34.2
+regex==2026.9.29
 rich==15.0.0
 setuptools==84.0.0
 shellingham==1.5.4
@@ -42,6 +43,7 @@ spacy-loggers==1.0.5
 srsly==2.5.3
 starlette==1.6.0
 thinc==8.3.13
+tiktoken==0.14.0
 tqdm==4.70.1
 typer==0.27.2
 typing-extensions==4.16.0
