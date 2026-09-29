@@ -1,4 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
+import json
 from pathlib import Path
 from uuid import uuid4
 
@@ -42,6 +43,15 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
         assert len(expected["data"]) == 1
         assert expected["data"][0]["content"].count("[source: ") == 2
         assert any("assistant: Lucky" in item["content"] for item in expected["data"])
+        metrics = json.loads((root / "search-metrics.jsonl").read_text().splitlines()[0])
+        assert metrics["item_count"] == 1
+        assert metrics["span_count"] == 2
+        assert metrics["complete_prefix_span_count"] == 2
+        assert metrics["complete_prefix_span_coverage"] == 1.0
+        assert metrics["top_k"] == 100
+        assert metrics["total_ms"] >= metrics["search_ms"]
+        assert metrics["boundary_source_ids"] == []
+        assert "Lucky" not in json.dumps(metrics)
         assert client.post("/add", json=payload, headers=headers).status_code == 200
         assert client.post("/search", json=query, headers=headers).json() == expected
         assert client.post("/search", json={**query, "user_id": "other"}, headers=headers).json() == {"data": []}

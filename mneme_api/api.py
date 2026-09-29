@@ -12,6 +12,7 @@ from uuid import uuid4
 from mneme import Memory
 
 from mneme_api.data_model import AddRequest, AddResponse, Evidence, SearchRequest, SearchResponse
+from mneme_api.search_metrics import SearchMetrics
 
 
 class RequestConflict(ValueError):
@@ -23,6 +24,7 @@ class MemoryService:
     def __init__(self, root: Path):
         self.root = root.resolve()
         self.root.mkdir(parents=True, exist_ok=True)
+        self.metrics = SearchMetrics(self.root)
 
     def add(self, request: AddRequest) -> AddResponse:
         payload = request.model_dump_json()
@@ -53,10 +55,13 @@ class MemoryService:
         )
 
     def search(self, request: SearchRequest) -> SearchResponse:
+        started = time.perf_counter()
         with self._user(request.user_id) as (directory, db):
             self._recover(directory, db)
             memory = self._memory(directory, db)
+            loaded = time.perf_counter()
             items = memory.search_evidence(request.query, topn=request.top_k)
+            searched = time.perf_counter()
             evidence = []
             for item in items:
                 parts = [f"[tag: {item.label}]"] if item.label else []
@@ -70,7 +75,23 @@ class MemoryService:
                         min(span.timestamp for span in item.spans), timezone.utc,
                     ).isoformat(),
                 ))
-        return SearchResponse(data=evidence)
+            response = SearchResponse(data=evidence)
+            formatted = time.perf_counter()
+            history_requests = db.execute(
+                "SELECT COUNT(*) FROM requests WHERE done = 1"
+            ).fetchone()[0]
+        self.metrics.record(
+            request.user_id,
+            items,
+            response,
+            request.top_k,
+            history_requests,
+            (loaded - started) * 1000,
+            (searched - loaded) * 1000,
+            (formatted - searched) * 1000,
+            (formatted - started) * 1000,
+        )
+        return response
 
     @contextmanager
     def _user(self, user_id: str) -> Iterator[tuple[Path, sqlite3.Connection]]:
