@@ -130,6 +130,26 @@ Mneme 0.3.1 Smoke 用时 14 分 22 秒，0.4.0 用时 40 分 15 秒，0.4.0 总�
 
 API 0.1.5 进一步加入无行为变化的 Search 诊断日志，记录 item、span、response/evidence token、100k evidence-token 完整前缀覆盖率、边界 source，以及 load/search/format 总耗时。日志不保存 query 或记忆正文。需要在部署更新后通过真实 Search 流量收集数据，才能判断 A 的下降是否与 evidence 前缀分配有关。
 
+### Search payload 与耗时复查
+
+API 0.1.5 部署后完成了第三次 0.4.0 Smoke。除去两条预检记录，本轮产生 48 次 Search 调用；Streaming 在增量节点重复检索，因此调用数可以多于 46 个最终评分样本。
+
+| 指标 | p50 | p95 | 最大值 |
+|---|---:|---:|---:|
+| EvidenceItem 数 | 2 | 24 | 38 |
+| Span 数 | 8 | 361 | 361 |
+| Evidence tokens | 2,062 | 71,442 | 71,499 |
+| 完整 Search response tokens | 2,220 | 76,980 | 77,335 |
+| Load/锁等待 | 3.55 秒 | 96.74 秒 | 175.32 秒 |
+| `search_evidence()` | 0.11 秒 | 1.97 秒 | 11.06 秒 |
+| API 内部总耗时 | 3.58 秒 | 98.37 秒 | 175.66 秒 |
+
+48/48 次 Search 的完整 item、span 和 evidence token 覆盖率均为 100%；没有一条超过 100,000 evidence tokens，没有 boundary item。由此可以排除“后排关键 evidence 被 100k 前缀截断”作为本轮 A/C 失分原因。
+
+Search 计算本身较快，主要长尾来自同一 user 的文件锁等待与 Memory 重载。最慢 user 的三次并发查询依次耗时约 98、138、176 秒，呈现明显的串行排队。即使计入排队，最大值仍低于平台单请求 30 分钟上限约 10 倍。Full 的历史可能更长，因此吞吐仍是运行成本风险，但当前没有单请求超时信号。
+
+上述 API 内部总耗时截至响应格式化完成，不包含随后执行的指标 tokenization 和日志追加；实际 Smoke Search 阶段完整通过，未观察到埋点引起的接口错误。
+
 ## 建议的下一步
 
 1. 保持 0.4.0 生产方案不变，优先增加 Search evidence 预算诊断，不继续盲改核心。
