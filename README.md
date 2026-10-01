@@ -28,7 +28,7 @@ Place the service behind your HTTPS reverse proxy for public evaluation. The com
 
 ## Upgrade
 
-API release 0.1.6 keeps up to 16 recently used user stores in process memory. It avoids reloading a user's complete history on every request while checking the SQLite journal before reuse. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
+API release 0.1.7 keeps up to four recently used user stores in process memory and handles up to four memory operations concurrently. This fits the reference 2 GB deployment while the platform's additional requests wait inside the API. It avoids reloading a user's complete history on every request while checking the SQLite journal before reuse. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
 
 ```bash
 git pull --ff-only
@@ -82,7 +82,7 @@ The package writes multiple JSON files without a transaction. A per-user SQLite 
 
 Each successful Search appends a diagnostic record to `MNEME_DATA_DIR/search-metrics.jsonl`. It records item, span, response-token and evidence-token counts; request-history size; load, search and formatting latency; complete source IDs within the first 100,000 evidence tokens; and source IDs on the boundary item. Token counts use `o200k_base`. The log contains no query or memory text. It measures the returned evidence payload only because platform prompt and question tokens are not visible to this API.
 
-Per-user file locks cover Add, Search, and recovery across local processes. The single service worker retains the 16 most recently used user stores. Before reuse, it compares the cached generation and completed-request count with SQLite, reloading stale entries written by another process. There is no automatic deletion: journals and superseded recovery generations contain evaluation data and require retention management by the operator.
+Per-user file locks cover Add, Search, and recovery across local processes. The single service worker handles four memory operations concurrently and retains the four most recently used user stores. Before reuse, it compares the cached generation and completed-request count with SQLite, reloading stale entries written by another process. There is no automatic deletion: journals and superseded recovery generations contain evaluation data and require retention management by the operator.
 
 ## Local verification
 

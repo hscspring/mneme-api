@@ -7,6 +7,7 @@ from collections import OrderedDict
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
+from threading import BoundedSemaphore
 from typing import Iterator
 from uuid import uuid4
 
@@ -22,14 +23,19 @@ class RequestConflict(ValueError):
 
 class MemoryService:
 
-    def __init__(self, root: Path, cache_size: int = 16):
+    def __init__(self, root: Path, cache_size: int = 4, max_concurrency: int = 4):
         self.root = root.resolve()
         self.root.mkdir(parents=True, exist_ok=True)
         self.metrics = SearchMetrics(self.root)
         self.cache_size = cache_size
+        self._capacity = BoundedSemaphore(max_concurrency)
         self._cache: OrderedDict[str, tuple[Memory, str, int]] = OrderedDict()
 
     def add(self, request: AddRequest) -> AddResponse:
+        with self._capacity:
+            return self._add(request)
+
+    def _add(self, request: AddRequest) -> AddResponse:
         payload = request.model_dump_json()
         with self._user(request.user_id) as (directory, db):
             previous = db.execute(
@@ -59,6 +65,10 @@ class MemoryService:
         )
 
     def search(self, request: SearchRequest) -> SearchResponse:
+        with self._capacity:
+            return self._search(request)
+
+    def _search(self, request: SearchRequest) -> SearchResponse:
         started = time.perf_counter()
         with self._user(request.user_id) as (directory, db):
             self._recover(request.user_id, directory, db)
