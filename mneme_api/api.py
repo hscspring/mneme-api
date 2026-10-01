@@ -3,6 +3,7 @@ import hashlib
 import json
 import sqlite3
 import time
+from collections import OrderedDict
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,10 +22,12 @@ class RequestConflict(ValueError):
 
 class MemoryService:
 
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, cache_size: int = 16):
         self.root = root.resolve()
         self.root.mkdir(parents=True, exist_ok=True)
         self.metrics = SearchMetrics(self.root)
+        self.cache_size = cache_size
+        self._cache: OrderedDict[str, tuple[Memory, str, int]] = OrderedDict()
 
     def add(self, request: AddRequest) -> AddResponse:
         payload = request.model_dump_json()
@@ -34,20 +37,21 @@ class MemoryService:
             ).fetchone()
             if previous is not None and previous[0] != payload:
                 raise RequestConflict("request_id already belongs to a different payload")
-            self._recover(directory, db)
+            self._recover(request.user_id, directory, db)
             if previous is None:
                 with db:
                     db.execute(
                         "INSERT INTO requests(id, payload, received, done) VALUES (?, ?, ?, 0)",
                         (request.request_id, payload, time.time()),
                     )
-                memory = self._memory(directory, db)
+                memory = self._memory(request.user_id, directory, db)
                 received = db.execute(
                     "SELECT received FROM requests WHERE id = ?", (request.request_id,)
                 ).fetchone()[0]
                 self._remember(memory, request, received)
                 with db:
                     db.execute("UPDATE requests SET done = 1 WHERE id = ?", (request.request_id,))
+                self._cache_memory(request.user_id, memory, db)
         return AddResponse(
             request_id=request.request_id,
             user_id=request.user_id,
@@ -57,8 +61,8 @@ class MemoryService:
     def search(self, request: SearchRequest) -> SearchResponse:
         started = time.perf_counter()
         with self._user(request.user_id) as (directory, db):
-            self._recover(directory, db)
-            memory = self._memory(directory, db)
+            self._recover(request.user_id, directory, db)
+            memory = self._memory(request.user_id, directory, db)
             loaded = time.perf_counter()
             items = memory.search_evidence(request.query, topn=request.top_k)
             searched = time.perf_counter()
@@ -114,11 +118,17 @@ class MemoryService:
             finally:
                 db.close()
 
-    def _memory(self, directory: Path, db: sqlite3.Connection) -> Memory:
-        generation = db.execute("SELECT generation FROM state").fetchone()[0]
-        return Memory(root=str(directory / generation))
+    def _memory(self, user_id: str, directory: Path, db: sqlite3.Connection) -> Memory:
+        generation, done = self._state(db)
+        if cached := self._cache.get(user_id):
+            if cached[1:] == (generation, done):
+                self._cache.move_to_end(user_id)
+                return cached[0]
+        memory = Memory(root=str(directory / generation))
+        self._put_cache(user_id, memory, generation, done)
+        return memory
 
-    def _recover(self, directory: Path, db: sqlite3.Connection) -> None:
+    def _recover(self, user_id: str, directory: Path, db: sqlite3.Connection) -> None:
         if db.execute("SELECT 1 FROM requests WHERE done = 0 LIMIT 1").fetchone() is None:
             return
         generation = uuid4().hex
@@ -128,6 +138,22 @@ class MemoryService:
         with db:
             db.execute("UPDATE state SET generation = ?", (generation,))
             db.execute("UPDATE requests SET done = 1")
+        self._cache_memory(user_id, memory, db)
+
+    def _cache_memory(self, user_id: str, memory: Memory, db: sqlite3.Connection) -> None:
+        generation, done = self._state(db)
+        self._put_cache(user_id, memory, generation, done)
+
+    def _put_cache(self, user_id: str, memory: Memory, generation: str, done: int) -> None:
+        self._cache[user_id] = (memory, generation, done)
+        self._cache.move_to_end(user_id)
+        while len(self._cache) > self.cache_size:
+            self._cache.popitem(last=False)
+
+    def _state(self, db: sqlite3.Connection) -> tuple[str, int]:
+        generation = db.execute("SELECT generation FROM state").fetchone()[0]
+        done = db.execute("SELECT COUNT(*) FROM requests WHERE done = 1").fetchone()[0]
+        return generation, done
 
     def _remember(self, memory: Memory, request: AddRequest, received: float) -> None:
         session = hashlib.sha256(request.session_id.encode()).hexdigest()
