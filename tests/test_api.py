@@ -7,6 +7,7 @@ import pytest
 from fastapi.testclient import TestClient
 from mneme import Memory
 
+import mneme_api.api as api_module
 from mneme_api.app import create_app
 from mneme_api.api import MemoryService
 from mneme_api.data_model import AddRequest, SearchRequest
@@ -111,3 +112,24 @@ def test_concurrent_user_writes() -> None:
     assert len(result.data) == 1
     for index in range(4):
         assert f"Lucky visited city number {index}." in result.data[0].content
+
+
+def test_reuses_loaded_memory(monkeypatch: pytest.MonkeyPatch) -> None:
+    root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
+    original = Memory
+    loads = 0
+
+    def load_memory(*args: object, **kwargs: object) -> Memory:
+        nonlocal loads
+        loads += 1
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(api_module, "Memory", load_memory)
+    service = MemoryService(root)
+    for index in range(2):
+        service.add(AddRequest(
+            request_id=f"r{index}", user_id="cached", session_id="session",
+            messages=[{"role": "user", "content": f"Remember value {index}."}],
+        ))
+    service.search(SearchRequest(user_id="cached", query="value", top_k=100))
+    assert loads == 1

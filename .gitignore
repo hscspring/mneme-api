@@ -5,6 +5,7 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 .runtime/
+*.pem
 results/
 requests.jsonl
 search-metrics-*.jsonl
