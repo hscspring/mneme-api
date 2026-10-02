@@ -23,7 +23,7 @@ class RequestConflict(ValueError):
 
 class MemoryService:
 
-    def __init__(self, root: Path, cache_size: int = 4, max_concurrency: int = 4):
+    def __init__(self, root: Path, cache_size: int = 1, max_concurrency: int = 1):
         self.root = root.resolve()
         self.root.mkdir(parents=True, exist_ok=True)
         self.metrics = SearchMetrics(self.root)
