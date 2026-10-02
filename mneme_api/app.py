@@ -28,7 +28,7 @@ def create_app() -> FastAPI:
         app.state.memory = MemoryService(Path(os.environ["MNEME_DATA_DIR"]))
         yield
 
-    app = FastAPI(title="Mneme API", version="0.1.8", lifespan=lifespan)
+    app = FastAPI(title="Mneme API", version="0.1.9", lifespan=lifespan)
     app.include_router(router)
     app.add_exception_handler(RequestConflict, conflict)
     app.add_exception_handler(Exception, failure)
