@@ -71,7 +71,7 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
             {"role": "user", "content": "Lucky visited Paris."},
             {"role": "assistant", "content": "Lucky visited London too."},
         ]}
-        original = Memory.remember
+        original = Memory.remember_many
         calls = 0
 
         def fail_after_write(self: Memory, *args: object, **kwargs: object) -> object:
@@ -83,7 +83,7 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
             return result
 
         with monkeypatch.context() as patch:
-            patch.setattr(Memory, "remember", fail_after_write)
+            patch.setattr(Memory, "remember_many", fail_after_write)
             assert client.post("/add", json=interrupted, headers=headers).status_code == 503
         assert client.post("/add", json=interrupted, headers=headers).status_code == 200
         results = client.post("/search", json=query, headers=headers).json()["data"]

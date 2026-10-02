@@ -11,7 +11,7 @@ from threading import BoundedSemaphore
 from typing import Iterator
 from uuid import uuid4
 
-from mneme import Memory
+from mneme import Memory, RememberInput
 
 from mneme_api.data_model import AddRequest, AddResponse, Evidence, SearchRequest, SearchResponse
 from mneme_api.search_metrics import SearchMetrics
@@ -135,6 +135,8 @@ class MemoryService:
                 self._cache.move_to_end(user_id)
                 return cached[0]
         memory = Memory(root=str(directory / generation))
+        if memory.store.legacy:
+            memory.migrate_store()
         self._put_cache(user_id, memory, generation, done)
         return memory
 
@@ -167,14 +169,16 @@ class MemoryService:
 
     def _remember(self, memory: Memory, request: AddRequest, received: float) -> None:
         session = hashlib.sha256(request.session_id.encode()).hexdigest()
+        items = []
         for index, message in enumerate(request.messages):
             identity = json.dumps([request.request_id, index], ensure_ascii=False)
             round_id = int(hashlib.sha256(identity.encode()).hexdigest(), 16)
-            memory.remember(
+            items.append(RememberInput(
                 query=message.content if message.role == "user" else "",
                 response=message.content if message.role == "assistant" else "",
                 session_id=session,
                 round_id=round_id,
                 ts=message.timestamp / 1000 if message.timestamp is not None else received,
                 event_id=session,
-            )
+            ))
+        memory.remember_many(items)
