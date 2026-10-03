@@ -28,7 +28,7 @@ Place the service behind your HTTPS reverse proxy for public evaluation. The com
 
 ## Upgrade
 
-API release 0.1.9 uses mnemekit 0.5.0 transactional batch ingestion and incrementally persisted stores. The reference 2 GB deployment processes one memory operation at a time and retains one user store, preventing concurrent long-history loads from exhausting memory. Existing 0.4 stores are migrated atomically on first access. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
+API release 0.1.10 uses mnemekit 0.5.0 transactional batch ingestion and incrementally persisted stores. The reference 2 GB deployment processes one memory operation at a time and retains one user store. It releases the previous store before loading another user, preventing overlapping long-history memory peaks. Existing 0.4 stores are migrated atomically on first access. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
 
 ```bash
 git pull --ff-only
