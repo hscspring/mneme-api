@@ -1,4 +1,5 @@
 import fcntl
+import gc
 import hashlib
 import json
 import sqlite3
@@ -134,6 +135,10 @@ class MemoryService:
             if cached[1:] == (generation, done):
                 self._cache.move_to_end(user_id)
                 return cached[0]
+        self._cache.pop(user_id, None)
+        while len(self._cache) >= self.cache_size and self._cache:
+            self._cache.popitem(last=False)
+        gc.collect()
         memory = Memory(root=str(directory / generation))
         if memory.store.legacy:
             memory.migrate_store()
