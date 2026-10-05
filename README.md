@@ -2,7 +2,7 @@
 
 A standalone Add/Search service for [Mneme](https://pypi.org/project/mnemekit/), compatible with the [Agent Memory Leaderboard API](https://agentmemoryleaderboard.ai/api-guide).
 
-The service installs `mnemekit==0.5.0` from PyPI and calls its public interfaces. Search uses `Memory.search_evidence()` with the package's default evidence projection. It does not import a research checkout, modify Mneme, or implement extraction, projection, scoring, or reranking.
+The service installs `mnemekit==0.6.0` from PyPI and calls its public interfaces. Search uses `Memory.search_evidence()` with the package's default evidence projection. It does not import a research checkout, modify Mneme, or implement extraction, projection, scoring, or reranking.
 
 ## Install and start
 
@@ -28,7 +28,7 @@ Place the service behind your HTTPS reverse proxy for public evaluation. The com
 
 ## Upgrade
 
-API release 0.1.10 uses mnemekit 0.5.0 transactional batch ingestion and incrementally persisted stores. The reference 2 GB deployment processes one memory operation at a time and retains one user store. It releases the previous store before loading another user, preventing overlapping long-history memory peaks. Existing 0.4 stores are migrated atomically on first access. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
+API release 0.1.11 uses mnemekit 0.6.0 transactional batch ingestion and disk-backed stores. The reference 2 GB deployment processes one memory operation at a time and retains one user store. It releases the previous store before loading another user, preventing overlapping long-history memory peaks. Existing stores are migrated atomically on first access; migrate them serially before serving traffic on a constrained host. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
 
 ```bash
 git pull --ff-only
@@ -38,7 +38,7 @@ python -m pytest -q
 python -c "from importlib.metadata import version; print(version('mnemekit'))"
 ```
 
-The last command must print `0.5.0`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before the next platform Smoke. The HTTP contract and launch command are unchanged.
+The last command must print `0.6.0`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before resuming evaluation. The HTTP contract and launch command are unchanged.
 
 Old 0.2.0 turns remain readable; upgrading does not retroactively extract propositions for existing records. New writes use the installed package compiler. Use fresh evaluation user IDs for a consistently ingested new-version run. Do not change the deployed version during an active platform evaluation.
 
@@ -78,7 +78,7 @@ Search returns `{"data": [{"id": "...", "content": "...", "created_at": "..."}]}
 - Search calls `Memory.search_evidence(query, topn=top_k)` without an explicit projection, so Mneme uses its default `TAG_GRAPH_DEDUP` projection. Top-K is applied by Mneme after projection and counts evidence items, not turns or spans. The API does not deduplicate or truncate spans. Platform Answer context limits still apply.
 - Request IDs are scoped to users. The same ID and validated payload is idempotent; a different payload returns 409.
 
-The package writes multiple JSON files without a transaction. A per-user SQLite request journal records each accepted Add before invoking Mneme. If a write is interrupted, the next Add/Search rebuilds that user's store in a new generation by replaying the journal through `Memory.remember()`, then switches the active generation. Recovery errors return 503; partially written generations are never searched. This handles process interruptions, not a guarantee against storage failure or machine power loss.
+A per-user SQLite request journal records each accepted Add before invoking Mneme's transactional Store. If a write is interrupted, the next Add/Search rebuilds that user's store in a new generation by replaying the journal through `Memory.remember_many()`, then switches the active generation. Recovery errors return 503; partially written generations are never searched. This handles process interruptions, not a guarantee against storage failure or machine power loss.
 
 Each successful Search appends a diagnostic record to `MNEME_DATA_DIR/search-metrics.jsonl`. It records item, span, response-token and evidence-token counts; request-history size; load, search and formatting latency; complete source IDs within the first 100,000 evidence tokens; and source IDs on the boundary item. Token counts use `o200k_base`. The log contains no query or memory text. It measures the returned evidence payload only because platform prompt and question tokens are not visible to this API.
 
