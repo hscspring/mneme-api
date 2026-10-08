@@ -28,7 +28,7 @@ Place the service behind your HTTPS reverse proxy for public evaluation. The com
 
 ## Upgrade
 
-API release 0.1.11 uses mnemekit 0.6.0 transactional batch ingestion and disk-backed stores. The reference 2 GB deployment processes one memory operation at a time and retains one user store. It releases the previous store before loading another user, preventing overlapping long-history memory peaks. Existing stores are migrated atomically on first access; migrate them serially before serving traffic on a constrained host. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
+API release 0.1.12 uses mnemekit 0.6.0 transactional batch ingestion and disk-backed stores. The reference 2 GB deployment processes one memory operation at a time and releases its Memory object after every request, preventing a large user store from remaining resident between searches. Existing stores are migrated atomically on first access; migrate them serially before serving traffic on a constrained host. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
 
 ```bash
 git pull --ff-only

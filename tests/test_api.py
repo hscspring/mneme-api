@@ -114,7 +114,7 @@ def test_concurrent_user_writes() -> None:
         assert f"Lucky visited city number {index}." in result.data[0].content
 
 
-def test_reuses_loaded_memory(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_releases_memory_between_requests(monkeypatch: pytest.MonkeyPatch) -> None:
     root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
     original = Memory
     loads = 0
@@ -132,4 +132,4 @@ def test_reuses_loaded_memory(monkeypatch: pytest.MonkeyPatch) -> None:
             messages=[{"role": "user", "content": f"Remember value {index}."}],
         ))
     service.search(SearchRequest(user_id="cached", query="value", top_k=100))
-    assert loads == 1
+    assert loads == 3
