@@ -34,7 +34,7 @@ class SearchMetrics:
         format_ms: float,
         total_ms: float,
     ) -> None:
-        item_tokens = [len(self.encoding.encode(item.content)) for item in response.data]
+        item_tokens = [len(self.encoding.encode_ordinary(item.content)) for item in response.data]
         prefix_tokens = 0
         prefix_items = []
         prefix_sources = []
@@ -55,7 +55,7 @@ class SearchMetrics:
             "top_k": top_k,
             "item_count": len(items),
             "span_count": span_count,
-            "response_tokens": len(self.encoding.encode(response.model_dump_json())),
+            "response_tokens": len(self.encoding.encode_ordinary(response.model_dump_json())),
             "evidence_tokens": evidence_tokens,
             "prefix_token_limit": PREFIX_TOKENS,
             "complete_prefix_tokens": prefix_tokens,
