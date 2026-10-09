@@ -35,7 +35,8 @@ mnemekit 0.6.0 已经解决此前最严重的 Store 冷启动和常驻内存问�
 | 平台并发上限 | Add 16、Search 16 |
 | Search 调用 | `memory.search_evidence(query, topn=100)` |
 | projection | 0.6.0 默认 `TAG_GRAPH_DEDUP` |
-| Reader 上限 | evidence 前 100,000 tokens |
+| 官方 Answer 输入预算 | 117,760 tokens，问题、选项和指令也占用该预算 |
+| API evidence 诊断线 | 100,000 tokens，作为保守的 Search 前缀观测口径 |
 
 API 每次 Search 记录以下分段耗时：
 
@@ -71,9 +72,9 @@ P50 请求中，`search_evidence()` 占已计时总延迟约 99%。重新创建 
 | 完整 item 的前缀 tokens | 0 | 3,786 | 71,214 | 80,372 |
 | 完整 item 的 span 覆盖率 | 0% | 0.08% | 1.52% | 1.76% |
 
-`完整 item 的前缀`只统计在 100k 边界前能够完整放下的 item。若第一个 item 自身超过 100k，平台仍会从该 item 内截断，因此该值可能为 0。
+`完整 item 的前缀`只统计在 API 采用的 100k evidence 诊断线前能够完整放下的 item。若第一个 item 自身超过 100k，该值可能为 0。
 
-无论如何，Reader 最多使用前 100k tokens，只占约 485 万 evidence tokens 的 2.1%。核心却已经为其余约 98% 的内容完成 postings 读取、trace 预取、排序、span 物化和 Python 对象分配，API 随后还要把它们拼接进约 547 万 tokens 的 JSON response。
+官方 API Guide 不设置统一的 Search 文本字符上限，因此约 547 万 tokens 的响应不会仅因长度而触发契约错误，原始响应也会完整归档。但统一 Answer 的总输入预算只有 117,760 tokens，且问题、选项和指令也占用这份预算；超出后只按 Search 返回顺序保留 token 计数前缀。即使忽略其他 prompt 内容，最多也只有约 485 万 evidence tokens 的 2.4% 能进入 Answer；按 API 的 100k 保守 evidence 诊断线计算则约为 2.1%。核心却已经为其余约 98% 的内容完成 postings 读取、trace 预取、排序、span 物化和 Python 对象分配，API 随后还要把它们拼接进约 547 万 tokens 的 JSON response。
 
 ### 3.3 内存曲线
 
@@ -128,7 +129,7 @@ P50 请求中，`search_evidence()` 占已计时总延迟约 99%。重新创建 
 1. 当前稳定速度约为每 4.8–5.6 分钟完成一个重 Search，即每小时约 11–12 个。
 2. 平台并发 16 无法转化为吞吐，因为单请求峰值内存迫使 API 串行。
 3. 历史极端值超过 60 分钟，已经高于平台 30 分钟单请求上限。
-4. 返回约 547 万 tokens，而下游只读取前 100k，绝大多数计算、对象和网络流量没有进入评分。
+4. 返回约 547 万 tokens，而官方 Answer 总输入预算仅 117,760 tokens，绝大多数计算、对象和网络流量没有进入评分。
 5. 对普通在线业务，分钟级检索延迟和 GiB 级单请求峰值都不可接受；不使用 embedding/LLM 本应带来低延迟和低成本，目前这一优势尚未兑现。
 
 ## 7. 核心改进需求
@@ -144,7 +145,7 @@ P50 请求中，`search_evidence()` 占已计时总延迟约 99%。重新创建 
 - 最多产生给定内容预算，或支持 API 按 token budget 惰性消费。
 - 达到预算后不再读取和构造不可见后缀。
 
-mnemekit 可以继续保持 tokenizer 无关；例如提供确定性的 span/字符预算或惰性迭代器，由 API 负责 100k token 边界。关键是核心不能为最终不会返回的数千个 span 读取正文并创建对象。
+mnemekit 可以继续保持 tokenizer 无关；例如提供确定性的 span/字符预算或惰性迭代器，由 API 负责与 Answer 预算对齐的 token 边界。关键是核心不能为最终不会进入 Answer 的数千个 span 读取正文并创建对象。
 
 ### P0：保持 Reader 可见前缀语义
 
@@ -153,9 +154,9 @@ mnemekit 可以继续保持 tokenizer 无关；例如提供确定性的 span/字
 - EvidenceItem 排序一致。
 - item 内 source/span 排序一致。
 - `source_id`、`role`、`timestamp`、`text` 一致。
-- Reader 可见的前 100k tokens 与 0.6.0 完整输出一致。
+- API 100k evidence 诊断前缀与 0.6.0 完整输出一致。
 
-允许省略的只有 Reader 永远不可见的后缀。若核心采用 span/字符预算而无法天然保证 token 前缀，应由 API 做固定 query 集的 100k token 严格 parity 验证。
+允许省略的只有 Answer 永远不可见的后缀。若核心采用 span/字符预算而无法天然保证 token 前缀，应由 API 做固定 query 集的 100k evidence 前缀严格 parity 验证，并确认加上问题、选项和指令后不超过官方 117,760 输入预算。
 
 ### P0：先选择，再物化
 
@@ -189,11 +190,11 @@ mnemekit 可以继续保持 tokenizer 无关；例如提供确定性的 span/字
 
 | 门槛 | 目标 |
 | --- | ---: |
-| Reader 可见前 100k token parity | 逐 token/逐字段一致 |
+| 100k evidence 诊断前缀 parity | 逐 token/逐字段一致 |
 | `search_evidence()` P50 | ≤ 5 s |
 | `search_evidence()` P95 | ≤ 10 s |
 | 单 Search 峰值 RSS | ≤ 1.2 GiB |
-| API 返回 evidence | ≤ 100k tokens 加一个完整边界 span，且硬上限 ≤ 120k |
+| API 返回 evidence | ≤ 100k tokens 加一个完整边界 span，且总 Answer 输入不超过 117,760 |
 | 30 分钟超时 | 0 次 |
 
 同时保留无预算模式用于通用 API 兼容性，但比赛路径必须显式使用有界模式。性能增长应主要与保留预算相关，而不是与高频 tag 的完整 posting 数和全部历史正文线性相关。
@@ -202,8 +203,8 @@ mnemekit 可以继续保持 tokenizer 无关；例如提供确定性的 span/字
 
 核心有界接口发布后，API 侧需要：
 
-1. 显式传入与 Reader 100k tokens 对齐的预算。
-2. 在固定 Store/query 上比较 0.6.0 完整输出与新实现的 Reader 可见前缀。
+1. 显式传入与 API 100k evidence 诊断线对齐的预算，并验证总 Answer 输入不超过官方 117,760 tokens。
+2. 在固定 Store/query 上比较 0.6.0 完整输出与新实现的 Answer 可见前缀。
 3. 重新执行 Smoke，确认召回评分没有回退。
 4. 记录端到端延迟、核心 phase、HTTP response 大小和峰值 RSS。
 5. 缩减当前诊断日志：metrics 文件已达到约 633 MB；避免记录大 source ID 数组，并避免为统计再次 tokenize 整个 547 万 token response。
