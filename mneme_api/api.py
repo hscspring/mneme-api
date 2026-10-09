@@ -42,7 +42,7 @@ class EvidenceFormatter:
         return SearchResponse(data=[self.item(item) for item in items])
 
     def tokens(self, items: tuple[EvidenceItem, ...]) -> int:
-        return sum(len(self.encoding.encode(self.item(item).content)) for item in items)
+        return sum(len(self.encoding.encode_ordinary(self.item(item).content)) for item in items)
 
 
 class RequestConflict(ValueError):

@@ -146,7 +146,10 @@ def test_search_applies_reader_token_budget(monkeypatch: pytest.MonkeyPatch) -> 
         messages=[
             {
                 "role": "user",
-                "content": f"Tea memory number {index} is calming and green every afternoon.",
+                "content": (
+                    f"Tea memory number {index} is calming and green every afternoon. "
+                    "The literal marker <|endoftext|> is ordinary memory text."
+                ),
             }
             for index in range(8)
         ],
@@ -160,8 +163,8 @@ def test_search_applies_reader_token_budget(monkeypatch: pytest.MonkeyPatch) -> 
 
     assert response.data
     assert 150 < sum(
-        len(service.formatter.encoding.encode(item.content))
+        len(service.formatter.encoding.encode_ordinary(item.content))
         for item in response.data
-    ) < 300
+    ) < 350
     assert sum(item.content.count("[source: ") for item in response.data) == 2
-    assert response.data[-1].content.endswith("every afternoon.")
+    assert response.data[-1].content.endswith("ordinary memory text.")
