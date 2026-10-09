@@ -133,3 +133,35 @@ def test_releases_memory_between_requests(monkeypatch: pytest.MonkeyPatch) -> No
         ))
     service.search(SearchRequest(user_id="cached", query="value", top_k=100))
     assert loads == 3
+
+
+def test_search_applies_reader_token_budget(monkeypatch: pytest.MonkeyPatch) -> None:
+    root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
+    monkeypatch.setattr(api_module, "EVIDENCE_TOKEN_LIMIT", 150)
+    service = MemoryService(root)
+    service.add(AddRequest(
+        request_id="r1",
+        user_id="bounded",
+        session_id="session",
+        messages=[
+            {
+                "role": "user",
+                "content": f"Tea memory number {index} is calming and green every afternoon.",
+            }
+            for index in range(8)
+        ],
+    ))
+
+    response = service.search(SearchRequest(
+        user_id="bounded",
+        query="Which green tea is calming?",
+        top_k=100,
+    ))
+
+    assert response.data
+    assert 150 < sum(
+        len(service.formatter.encoding.encode(item.content))
+        for item in response.data
+    ) < 300
+    assert sum(item.content.count("[source: ") for item in response.data) == 2
+    assert response.data[-1].content.endswith("every afternoon.")

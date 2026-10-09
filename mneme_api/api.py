@@ -11,10 +11,38 @@ from threading import BoundedSemaphore
 from typing import Iterator
 from uuid import uuid4
 
-from mneme import Memory, RememberInput
+import tiktoken
+from mneme import EvidenceBudget, EvidenceItem, Memory, RememberInput
 
 from mneme_api.data_model import AddRequest, AddResponse, Evidence, SearchRequest, SearchResponse
 from mneme_api.search_metrics import SearchMetrics
+
+EVIDENCE_TOKEN_LIMIT = 100_000
+
+
+class EvidenceFormatter:
+
+    def __init__(self) -> None:
+        self.encoding = tiktoken.get_encoding("o200k_base")
+
+    def item(self, item: EvidenceItem) -> Evidence:
+        parts = [f"[tag: {item.label}]"] if item.label else []
+        for span in item.spans:
+            timestamp = datetime.fromtimestamp(span.timestamp, timezone.utc).isoformat()
+            parts.append(f"[{timestamp}] [source: {span.source_id}]\n{span.role}: {span.text}")
+        return Evidence(
+            id=item.id,
+            content="\n".join(parts),
+            created_at=datetime.fromtimestamp(
+                min(span.timestamp for span in item.spans), timezone.utc,
+            ).isoformat(),
+        )
+
+    def response(self, items: list[EvidenceItem]) -> SearchResponse:
+        return SearchResponse(data=[self.item(item) for item in items])
+
+    def tokens(self, items: tuple[EvidenceItem, ...]) -> int:
+        return sum(len(self.encoding.encode(self.item(item).content)) for item in items)
 
 
 class RequestConflict(ValueError):
@@ -27,6 +55,8 @@ class MemoryService:
         self.root = root.resolve()
         self.root.mkdir(parents=True, exist_ok=True)
         self.metrics = SearchMetrics(self.root)
+        self.formatter = EvidenceFormatter()
+        self.evidence_budget = EvidenceBudget(EVIDENCE_TOKEN_LIMIT, self.formatter.tokens)
         self._capacity = BoundedSemaphore(max_concurrency)
 
     def add(self, request: AddRequest) -> AddResponse:
@@ -77,22 +107,13 @@ class MemoryService:
             self._recover(request.user_id, directory, db)
             memory = self._memory(directory, db)
             loaded = time.perf_counter()
-            items = memory.search_evidence(request.query, topn=request.top_k)
+            items = memory.search_evidence(
+                request.query,
+                topn=request.top_k,
+                budget=self.evidence_budget,
+            )
             searched = time.perf_counter()
-            evidence = []
-            for item in items:
-                parts = [f"[tag: {item.label}]"] if item.label else []
-                for span in item.spans:
-                    timestamp = datetime.fromtimestamp(span.timestamp, timezone.utc).isoformat()
-                    parts.append(f"[{timestamp}] [source: {span.source_id}]\n{span.role}: {span.text}")
-                evidence.append(Evidence(
-                    id=item.id,
-                    content="\n".join(parts),
-                    created_at=datetime.fromtimestamp(
-                        min(span.timestamp for span in item.spans), timezone.utc,
-                    ).isoformat(),
-                ))
-            response = SearchResponse(data=evidence)
+            response = self.formatter.response(items)
             formatted = time.perf_counter()
             history_requests = db.execute(
                 "SELECT COUNT(*) FROM requests WHERE done = 1"
