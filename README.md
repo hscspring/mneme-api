@@ -2,7 +2,7 @@
 
 A standalone Add/Search service for [Mneme](https://pypi.org/project/mnemekit/), compatible with the [Agent Memory Leaderboard API](https://agentmemoryleaderboard.ai/api-guide).
 
-The service installs `mnemekit==0.8.0` from PyPI and calls its public interfaces. Search uses `Memory.search_evidence()` with the package's default evidence projection and an API-owned Reader budget. It does not import a research checkout, modify Mneme, or implement extraction, projection, scoring, or reranking.
+The service installs `mnemekit==0.8.1` from PyPI and calls its public interfaces. Search uses `Memory.search_evidence()` with the package's default evidence projection and an API-owned Reader budget. It does not import a research checkout, modify Mneme, or implement extraction, projection, scoring, or reranking.
 
 ## Install and start
 
@@ -28,7 +28,7 @@ Place the service behind your HTTPS reverse proxy for public evaluation. The com
 
 ## Upgrade
 
-API release 0.1.13 uses mnemekit 0.8.0 bounded evidence materialization and schema 3 disk-backed stores. The reference 2 GB deployment processes one memory operation at a time and releases its Memory object after every request, preventing a large user store from remaining resident between searches. Existing stores are migrated atomically on first access; migrate them serially before serving traffic on a constrained host. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
+API release 0.1.14 uses mnemekit 0.8.1 bounded evidence materialization and schema 3 disk-backed stores. The reference 2 GB deployment processes one memory operation at a time and releases its Memory object after every request, preventing a large user store from remaining resident between searches. Existing stores are migrated atomically on first access; migrate them serially before serving traffic on a constrained host. Run one Uvicorn worker as shown above. In the deployment's existing virtual environment:
 
 ```bash
 git pull --ff-only
@@ -38,7 +38,7 @@ python -m pytest -q
 python -c "from importlib.metadata import version; print(version('mnemekit'))"
 ```
 
-The last command must print `0.8.0`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before resuming evaluation. The HTTP contract and launch command are unchanged.
+The last command must print `0.8.1`. Have the deployment operator restart the service using its existing process manager, preserving `MNEME_API_KEY` and `MNEME_DATA_DIR`, then recheck Health/Add/Search before resuming evaluation. The HTTP contract and launch command are unchanged.
 
 Old 0.2.0 turns remain readable; upgrading does not retroactively extract propositions for existing records. New writes use the installed package compiler. Use fresh evaluation user IDs for a consistently ingested new-version run. Do not change the deployed version during an active platform evaluation.
 
