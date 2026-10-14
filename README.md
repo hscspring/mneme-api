@@ -114,6 +114,13 @@ timestamps, roles, and stored text. `created_at` is the earliest source timestam
 represented by the result. Optional `options` are accepted. No matches produce
 `{"data": []}`.
 
+API 0.2 uses Mneme4 identity-bound evidence composition. Each result is one
+complete original message, and `top_k` is therefore an exact source-item limit.
+The first ten activated sources retain their Mneme3 order; eligible evolution
+and joint queries compose the remaining evidence for the per-user `user` scope.
+The service admits only whole messages whose rendered evidence keeps the result
+within 100,000 `o200k_base` tokens.
+
 ## Persistence and isolation
 
 - Each `user_id` has a separate hashed data directory.

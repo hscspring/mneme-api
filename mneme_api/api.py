@@ -107,10 +107,11 @@ class MemoryService:
             self._recover(request.user_id, directory, db)
             memory = self._memory(directory, db)
             loaded = time.perf_counter()
-            items = memory.search_evidence(
+            items = memory.search_composed_evidence(
                 request.query,
                 topn=request.top_k,
                 budget=self.evidence_budget,
+                scope_owner="user",
             )
             searched = time.perf_counter()
             response = self.formatter.response(items)

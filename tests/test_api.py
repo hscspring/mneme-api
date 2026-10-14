@@ -41,11 +41,11 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
             "success": True, **{key: payload[key] for key in ("request_id", "user_id", "session_id")}
         }
         expected = client.post("/search", json=query, headers=headers).json()
-        assert len(expected["data"]) == 1
-        assert expected["data"][0]["content"].count("[source: ") == 2
+        assert len(expected["data"]) == 2
+        assert all(item["content"].count("[source: ") == 1 for item in expected["data"])
         assert any("assistant: Lucky" in item["content"] for item in expected["data"])
         metrics = json.loads((root / "search-metrics.jsonl").read_text().splitlines()[0])
-        assert metrics["item_count"] == 1
+        assert metrics["item_count"] == 2
         assert metrics["span_count"] == 2
         assert metrics["complete_prefix_span_count"] == 2
         assert metrics["complete_prefix_span_coverage"] == 1.0
@@ -59,10 +59,8 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
         grouped = client.post("/search", json={**query, "query": "Lucky", "top_k": 1}, headers=headers).json()["data"]
         assert len(grouped) == 1
         assert "user: My dog Lucky" in grouped[0]["content"]
-        assert "assistant: Lucky" in grouped[0]["content"]
         assert "2024-01-01T00:00:00+00:00" in grouped[0]["content"]
-        assert "2024-01-01T00:00:01+00:00" in grouped[0]["content"]
-        assert grouped[0]["content"].count("[source: ") == 2
+        assert grouped[0]["content"].count("[source: ") == 1
         assert client.post("/add", json={**payload, "session_id": "changed"}, headers=headers).status_code == 409
 
     with TestClient(create_app(), raise_server_exceptions=False) as client:
@@ -109,9 +107,10 @@ def test_concurrent_user_writes() -> None:
         for future in futures:
             assert future.result().success
     result = MemoryService(root).search(SearchRequest(user_id="shared", query="Lucky", top_k=100))
-    assert len(result.data) == 1
+    assert len(result.data) == 4
+    content = "\n".join(item.content for item in result.data)
     for index in range(4):
-        assert f"Lucky visited city number {index}." in result.data[0].content
+        assert f"Lucky visited city number {index}." in content
 
 
 def test_releases_memory_between_requests(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -162,9 +161,9 @@ def test_search_applies_reader_token_budget(monkeypatch: pytest.MonkeyPatch) -> 
     ))
 
     assert response.data
-    assert 150 < sum(
+    assert sum(
         len(service.formatter.encoding.encode_ordinary(item.content))
         for item in response.data
-    ) < 350
-    assert sum(item.content.count("[source: ") for item in response.data) == 2
-    assert response.data[-1].content.endswith("ordinary memory text.")
+    ) <= 150
+    assert all(item.content.count("[source: ") == 1 for item in response.data)
+    assert all(item.content.endswith("ordinary memory text.") for item in response.data)
