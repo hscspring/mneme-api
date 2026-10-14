@@ -42,7 +42,10 @@ class EvidenceFormatter:
         return SearchResponse(data=[self.item(item) for item in items])
 
     def tokens(self, items: tuple[EvidenceItem, ...]) -> int:
-        return sum(len(self.encoding.encode_ordinary(self.item(item).content)) for item in items)
+        return sum(self.item_tokens(item) for item in items)
+
+    def item_tokens(self, item: EvidenceItem) -> int:
+        return len(self.encoding.encode_ordinary(self.item(item).content))
 
 
 class RequestConflict(ValueError):
@@ -56,7 +59,11 @@ class MemoryService:
         self.root.mkdir(parents=True, exist_ok=True)
         self.metrics = SearchMetrics(self.root)
         self.formatter = EvidenceFormatter()
-        self.evidence_budget = EvidenceBudget(EVIDENCE_TOKEN_LIMIT, self.formatter.tokens)
+        self.evidence_budget = EvidenceBudget(
+            EVIDENCE_TOKEN_LIMIT,
+            self.formatter.tokens,
+            item_measure=self.formatter.item_tokens,
+        )
         self._capacity = BoundedSemaphore(max_concurrency)
 
     def add(self, request: AddRequest) -> AddResponse:
