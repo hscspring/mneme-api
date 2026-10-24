@@ -50,6 +50,8 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
         assert metrics["complete_prefix_span_count"] == 2
         assert metrics["complete_prefix_span_coverage"] == 1.0
         assert metrics["top_k"] == 100
+        assert metrics["evolution_route"] is False
+        assert metrics["evolution_source_count"] == 0
         assert metrics["total_ms"] >= metrics["search_ms"]
         assert metrics["boundary_source_ids"] == []
         assert "Lucky" not in json.dumps(metrics)
@@ -132,6 +134,31 @@ def test_releases_memory_between_requests(monkeypatch: pytest.MonkeyPatch) -> No
         ))
     service.search(SearchRequest(user_id="cached", query="value", top_k=100))
     assert loads == 3
+
+
+def test_add_batches_form_successor_episodes() -> None:
+    root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
+    service = MemoryService(root)
+    for request_id, date in (("old", "March 12"), ("new", "April 18")):
+        service.add(AddRequest(
+            request_id=request_id,
+            user_id="evolving",
+            session_id="same-session",
+            messages=[{
+                "role": "user",
+                "content": f"The Atlas release date is {date} after final review.",
+            }],
+        ))
+
+    service.search(SearchRequest(
+        user_id="evolving",
+        query="What happened to the Atlas release after final review?",
+        top_k=100,
+    ))
+    metrics = json.loads((root / "search-metrics.jsonl").read_text().splitlines()[-1])
+
+    assert metrics["evolution_route"] is True
+    assert metrics["evolution_source_count"] >= 1
 
 
 def test_search_applies_reader_token_budget(monkeypatch: pytest.MonkeyPatch) -> None:
