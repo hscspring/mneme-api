@@ -38,10 +38,6 @@ python -m pytest -q
 Restart the service with its existing process manager while preserving
 `MNEME_API_KEY` and `MNEME_DATA_DIR`, then verify Health, Add, and Search.
 Do not change the deployed code or dependencies during an active evaluation.
-API 0.3 pins `mnemekit==0.10.0`. Existing schema-3 generations remain readable
-without modification, but their conservative evolution index must be built by
-an explicit `Memory.migrate_store()` maintenance step before successor routing
-is expected. New generations build the index incrementally from each Add batch.
 
 ## Authentication
 
@@ -118,8 +114,7 @@ timestamps, roles, and stored text. `created_at` is the earliest source timestam
 represented by the result. Optional `options` are accepted. No matches produce
 `{"data": []}`.
 
-API 0.3 uses Mneme4 identity-bound evidence composition followed by the bounded
-Mneme5-candidate successor route. Each result is one
+API 0.2 uses Mneme4 identity-bound evidence composition. Each result is one
 complete original message, and `top_k` is therefore an exact source-item limit.
 The first ten activated sources retain their Mneme3 order; eligible evolution
 and joint queries compose the remaining evidence for the per-user `user` scope.

@@ -130,7 +130,6 @@ class MemoryService:
             request.user_id,
             items,
             response,
-            memory.last_evolution_source_count,
             request.top_k,
             history_requests,
             (loaded - started) * 1000,
