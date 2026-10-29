@@ -2,6 +2,30 @@
 
 A standalone, persistent Add/Search API for conversational memory.
 
+## Agent Memory Challenge release
+
+This repository is the participant-hosted API wrapper for Mneme in the 2026
+Agent Memory Challenge Textual track, Open-source Methods division. The fixed
+submission is:
+
+- [`mneme-api` v0.3.0](https://github.com/hscspring/mneme-api/tree/v0.3.0),
+  commit [`6cd9420b612f52c8f78d5e973ae5d7cca6468003`](https://github.com/hscspring/mneme-api/commit/6cd9420b612f52c8f78d5e973ae5d7cca6468003)
+- [`mnemekit` v0.10.1](https://github.com/FTP2026/Mneme/tree/v0.10.1),
+  commit [`9d8d170ebf3575494c02ccb16378f60768b39a78`](https://github.com/FTP2026/Mneme/commit/9d8d170ebf3575494c02ccb16378f60768b39a78)
+- Core method: Mneme5 directional successor recall (`ALG-DDR-1`)
+
+The core method is authored and maintained in the
+[`FTP2026/Mneme`](https://github.com/FTP2026/Mneme) repository. This wrapper
+imports its published package without forking the retrieval algorithm. It adds
+the challenge Add/Search contract, per-user persistence and isolation,
+request-level idempotency and recovery, and token-exact evidence admission.
+
+The memory path does not call an LLM, retrieval embedding model, vector
+database, or learned reranker. It uses the fixed `en_core_web_sm==3.8.0` spaCy
+pipeline for English POS tagging, lemmatization, named-entity recognition, and
+dependency parsing. Chinese segmentation uses `jieba`. Both dependencies are
+declared in `pyproject.toml` and locked in `requirements.lock`.
+
 ## Install and start
 
 Python 3.11+ and Linux are required.
@@ -114,12 +138,13 @@ timestamps, roles, and stored text. `created_at` is the earliest source timestam
 represented by the result. Optional `options` are accepted. No matches produce
 `{"data": []}`.
 
-API 0.2 uses Mneme4 identity-bound evidence composition. Each result is one
-complete original message, and `top_k` is therefore an exact source-item limit.
-The first ten activated sources retain their Mneme3 order; eligible evolution
-and joint queries compose the remaining evidence for the per-user `user` scope.
-The service admits only whole messages whose rendered evidence keeps the result
-within 100,000 `o200k_base` tokens.
+API 0.3 uses Mneme5 directional successor recall and identity-bound evidence
+composition through `search_composed_evidence()`. Each result preserves complete
+original messages with source identifiers, roles, and timestamps. Directly
+activated evidence keeps its stable order; a strongly activated earlier episode
+may contribute a bounded later successor before tail composition. The API fixes
+`scope_owner="user"`, requests at most 100 items, and admits only whole evidence
+whose rendered content keeps the response within 100,000 `o200k_base` tokens.
 
 ## Persistence and isolation
 
