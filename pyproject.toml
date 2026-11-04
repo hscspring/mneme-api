@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mneme-api"
-version = "0.3.0"
+version = "0.3.1"
 description = "Participant-hosted Add/Search API for Mneme"
+readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-  "mnemekit==0.10.1",
+  "mnemekit==0.10.2",
   "en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",
   "jieba>=0.42,<1",
   "spacy>=3.8,<3.9",

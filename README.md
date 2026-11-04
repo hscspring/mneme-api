@@ -82,6 +82,10 @@ receipt time.
 
 Request IDs are scoped to users. Repeating an ID with the same validated payload
 is idempotent. Reusing it with a different payload returns HTTP 409.
+New requests commit their request identity, messages, retrieval index, and
+evolution state in one `mnemekit 0.10.2` Store transaction. The legacy request
+journal remains available only for requests written before the upgrade and for
+recovering an old interrupted write.
 
 ## Search
 
@@ -123,15 +127,20 @@ whose rendered content keeps the response within 100,000 `o200k_base` tokens.
 - Each `user_id` has a separate hashed data directory.
 - Search accesses only the requested user's data.
 - Messages preserve source order, role, timestamp, session, and request identity.
-- A per-user SQLite journal records each accepted Add before the memory write.
-- After an interrupted write, the next Add or Search rebuilds a new generation
-  from the journal before making it active.
+- New Add requests use the Store's atomic request ledger; a successful commit
+  exposes both the complete memory update and its idempotency record.
+- The per-user legacy journal remains readable. After an old interrupted write,
+  the next Add or Search rebuilds a new generation before making it active.
 - Recovery failures return HTTP 503; partially written generations are not searched.
 - Stored data is not deleted automatically. Retention is the operator's responsibility.
 
 Each successful Search appends an operational record to
 `MNEME_DATA_DIR/search-metrics.jsonl`. Metrics include result sizes and phase
 latencies. They do not contain the query or stored memory text.
+
+Set `MNEME_ADD_METRICS_PATH` to an absolute JSONL path to record optional Add
+phase timings. These records contain a user hash, message count, phase latency,
+and error type, but no request payload, session identifier, or memory text.
 
 ## Local verification
 

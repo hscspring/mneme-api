@@ -1,6 +1,8 @@
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+from datetime import datetime, timezone
 import json
 from pathlib import Path
+import time
 from uuid import uuid4
 
 import pytest
@@ -11,6 +13,11 @@ import mneme_api.api as api_module
 from mneme_api.app import create_app
 from mneme_api.api import MemoryService
 from mneme_api.data_model import AddRequest, SearchRequest
+
+
+def _add_in_process(root: str, payload: dict[str, object]) -> bool:
+    service = MemoryService(Path(root))
+    return service.add(AddRequest.model_validate(payload)).success
 
 
 @pytest.mark.parametrize("header,value", [
@@ -71,7 +78,12 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
             {"role": "user", "content": "Lucky visited Paris."},
             {"role": "assistant", "content": "Lucky visited London too."},
         ]}
-        original = Memory.remember_many
+        method = (
+            "remember_idempotent"
+            if hasattr(Memory, "remember_idempotent")
+            else "remember_many"
+        )
+        original = getattr(Memory, method)
         calls = 0
 
         def fail_after_write(self: Memory, *args: object, **kwargs: object) -> object:
@@ -83,7 +95,7 @@ def test_persistence_isolation_and_retries(monkeypatch: pytest.MonkeyPatch, head
             return result
 
         with monkeypatch.context() as patch:
-            patch.setattr(Memory, "remember_many", fail_after_write)
+            patch.setattr(Memory, method, fail_after_write)
             assert client.post("/add", json=interrupted, headers=headers).status_code == 503
         assert client.post("/add", json=interrupted, headers=headers).status_code == 200
         results = client.post("/search", json=query, headers=headers).json()["data"]
@@ -115,6 +127,74 @@ def test_concurrent_user_writes() -> None:
         assert f"Lucky visited city number {index}." in content
 
 
+def test_same_request_is_idempotent_across_processes() -> None:
+    root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
+    payload = {
+        "request_id": "shared-request",
+        "user_id": "shared-user",
+        "session_id": "shared-session",
+        "messages": [{"role": "user", "content": "Lucky visited Kyoto."}],
+    }
+    with ProcessPoolExecutor(max_workers=4) as pool:
+        results = list(pool.map(
+            _add_in_process,
+            [str(root)] * 4,
+            [payload] * 4,
+        ))
+
+    assert results == [True] * 4
+    response = MemoryService(root).search(SearchRequest(
+        user_id="shared-user",
+        query="Lucky Kyoto",
+        top_k=100,
+    ))
+    assert len(response.data) == 1
+
+
+@pytest.mark.skipif(
+    not hasattr(Memory, "remember_idempotent"),
+    reason="atomic ledger is unavailable in the compatibility package",
+)
+def test_upgrade_recovers_legacy_pending_before_atomic_add(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
+    service = MemoryService(root)
+    legacy = AddRequest(
+        request_id="legacy-pending",
+        user_id="upgrade-user",
+        session_id="session",
+        messages=[{"role": "user", "content": "Lucky visited Paris."}],
+    )
+    original = Memory.remember_many
+
+    def fail_after_write(self: Memory, *args: object, **kwargs: object) -> object:
+        result = original(self, *args, **kwargs)
+        raise OSError("simulated legacy response-path failure")
+
+    with monkeypatch.context() as patch:
+        patch.delattr(Memory, "remember_idempotent")
+        patch.setattr(Memory, "remember_many", fail_after_write)
+        with pytest.raises(OSError):
+            service.add(legacy)
+
+    service.add(legacy)
+    service.add(AddRequest(
+        request_id="atomic-new",
+        user_id="upgrade-user",
+        session_id="session",
+        messages=[{"role": "user", "content": "Lucky visited Kyoto."}],
+    ))
+    response = service.search(SearchRequest(
+        user_id="upgrade-user",
+        query="Lucky visited",
+        top_k=100,
+    ))
+    content = "\n".join(item.content for item in response.data)
+    assert content.count("Lucky visited Paris.") == 1
+    assert content.count("Lucky visited Kyoto.") == 1
+
+
 def test_releases_memory_between_requests(monkeypatch: pytest.MonkeyPatch) -> None:
     root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
     original = Memory
@@ -134,6 +214,87 @@ def test_releases_memory_between_requests(monkeypatch: pytest.MonkeyPatch) -> No
         ))
     service.search(SearchRequest(user_id="cached", query="value", top_k=100))
     assert loads == 3
+
+
+def test_add_metrics_are_opt_in_and_redacted(monkeypatch: pytest.MonkeyPatch) -> None:
+    root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
+    metrics_path = root / "observability" / "add.jsonl"
+    monkeypatch.setenv("MNEME_ADD_METRICS_PATH", str(metrics_path))
+    service = MemoryService(root)
+
+    service.add(AddRequest(
+        request_id="profiled",
+        user_id="private-user",
+        session_id="private-session",
+        messages=[{"role": "user", "content": "private memory text"}],
+    ))
+
+    entry = json.loads(metrics_path.read_text().strip())
+    assert entry["success"] is True
+    assert entry["message_count"] == 1
+    assert entry["phases_ms"]["remember_ms"] >= 0
+    if entry["core_phases_ms"]:
+        assert "pending_commit_ms" not in entry["phases_ms"]
+        assert "done_commit_ms" not in entry["phases_ms"]
+    else:
+        assert entry["phases_ms"]["pending_commit_ms"] >= 0
+        assert entry["phases_ms"]["done_commit_ms"] >= 0
+    assert entry["total_ms"] >= entry["phases_ms"]["remember_ms"]
+    assert "private-user" not in json.dumps(entry)
+    assert "private memory text" not in json.dumps(entry)
+
+
+@pytest.mark.skipif(
+    not hasattr(Memory, "remember_idempotent"),
+    reason="atomic ledger is unavailable in the compatibility package",
+)
+def test_atomic_timestamp_is_captured_before_store_open(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = Path(__file__).resolve().parents[1] / ".runtime" / "tests" / uuid4().hex
+    service = MemoryService(root)
+    original_memory = service._memory
+    opened_at = []
+
+    def slow_memory(*args: object, **kwargs: object) -> Memory:
+        opened_at.append(time.time())
+        time.sleep(0.05)
+        return original_memory(*args, **kwargs)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(service, "_memory", slow_memory)
+        service.add(AddRequest(
+            request_id="default-time",
+            user_id="timestamp-user",
+            session_id="default-session",
+            messages=[{"role": "user", "content": "Preopenchronicle marker."}],
+        ))
+
+    default = service.search(SearchRequest(
+        user_id="timestamp-user",
+        query="Preopenchronicle",
+        top_k=1,
+    )).data[0]
+    assert default.created_at <= datetime.fromtimestamp(
+        opened_at[0], timezone.utc,
+    ).isoformat()
+
+    service.add(AddRequest(
+        request_id="explicit-time",
+        user_id="timestamp-user",
+        session_id="explicit-session",
+        messages=[{
+            "role": "user",
+            "content": "Explicitchronicle marker.",
+            "timestamp": 1704067200000,
+        }],
+    ))
+    explicit = service.search(SearchRequest(
+        user_id="timestamp-user",
+        query="Explicitchronicle",
+        top_k=1,
+    )).data[0]
+    assert explicit.created_at == "2024-01-01T00:00:00+00:00"
 
 
 def test_add_batches_form_successor_episodes() -> None:
