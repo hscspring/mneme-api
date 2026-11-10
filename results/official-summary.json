@@ -1,0 +1,89 @@
+{
+  "provenance": "Historical completed aggregate recorded in reports/aml-cycle2-mneme5-full-retrospective-20261104.md. This summary is transcribed, not a fresh official API export. First Full raw export is results/aml/runtime/full-evaluation-result.json. Second Full original final API export was not present locally and could not be retrieved on 2026-11-10.",
+  "units": "Scores on 0–100 scale; delta in percentage points.",
+  "runs": [
+    {
+      "task_id": "teval_9abcb4ed9849697f",
+      "status": "succeeded",
+      "questions": 9602,
+      "textual_questions": 5609,
+      "streaming_questions": 3993,
+      "overall_score": 44.25428475859234,
+      "textual_score": 44.16369356638791,
+      "streaming_score": 44.381538952700694,
+      "started_at": "2026-09-30T14:39:55Z",
+      "completed_at": "2026-10-11T01:55:54Z",
+      "deployment": "Mixed engineering releases 0.4–0.8.3"
+    },
+    {
+      "task_id": "teval_609f7914223b606d",
+      "status": "succeeded",
+      "questions": 9602,
+      "textual_questions": 5609,
+      "streaming_questions": 3993,
+      "overall_score": 50.7572929976606,
+      "textual_score": 55.74188983572071,
+      "streaming_score": 43.75538874905572,
+      "started_at": "2026-10-30T15:01:46Z",
+      "completed_at": "2026-11-02T20:25:37Z",
+      "api_commit": "6cd9420b612f52c8f78d5e973ae5d7cca6468003",
+      "core_commit": "9d8d170ebf3575494c02ccb16378f60768b39a78",
+      "api_version": "0.3.0",
+      "core_version": "0.10.1",
+      "max_add_concurrency": 16,
+      "search_concurrency": 16,
+      "top_k": 100,
+      "evidence_budget_tokens": 100000
+    }
+  ],
+  "overall_delta_pp": 6.503008239068253,
+  "capabilities_rounded_from_report": [
+    {
+      "id": "A",
+      "count": 2735,
+      "first": 50.0227,
+      "second": 56.1569
+    },
+    {
+      "id": "B",
+      "count": 1944,
+      "first": 32.7978,
+      "second": 45.4674
+    },
+    {
+      "id": "C",
+      "count": 1474,
+      "first": 41.0266,
+      "second": 44.4545
+    },
+    {
+      "id": "D",
+      "count": 1173,
+      "first": 38.6262,
+      "second": 61.6106
+    },
+    {
+      "id": "E",
+      "count": 258,
+      "first": 31.8798,
+      "second": 38.1589
+    },
+    {
+      "id": "G",
+      "count": 688,
+      "first": 45.8972,
+      "second": 47.5206
+    },
+    {
+      "id": "H",
+      "count": 619,
+      "first": 61.8097,
+      "second": 58.9986
+    }
+  ],
+  "caveats": [
+    "Capability slices overlap; overall is not their simple mean.",
+    "The first Full is a mixed-version external baseline, not a paired causal ablation.",
+    "Historical method labels mnemekit_0.10.0 in final 0.10.1 prediction caches were retained by the frozen evaluator; filenames, hashes and gate report identify the actual candidate."
+  ]
+}

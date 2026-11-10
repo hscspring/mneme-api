@@ -1,0 +1,1072 @@
+{
+  "generated_at": "2026-11-10",
+  "repository": "/mnt/sv0/sean/research/mneme-api",
+  "origin": "git@github.com:hscspring/mneme-api.git",
+  "branch": "main",
+  "included": [
+    {
+      "archive_path": ".gitignore",
+      "bytes": 125,
+      "sha256": "3126ad67dfae34d06cbcd8f935aea212452f453e36e6e6d56fb0dfe1c3244bd8"
+    },
+    {
+      "archive_path": "README.md",
+      "bytes": 5503,
+      "sha256": "77018a92e40d1c3d104e01dac858cbea025667ac9d80831c53816bcd31a40e0a"
+    },
+    {
+      "archive_path": "deploy/archive/cutover-0.10.1.sh",
+      "bytes": 545,
+      "sha256": "84ec5c4968d515ff155335864bff5178b1d84470adcd5683d813bd3dd3e9e3c7",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/cutover-0.10.1.sh",
+      "source_sha256": "84ec5c4968d515ff155335864bff5178b1d84470adcd5683d813bd3dd3e9e3c7"
+    },
+    {
+      "archive_path": "deploy/archive/mneme-api-0.10.1.service",
+      "bytes": 659,
+      "sha256": "4d9865f4021fc2c0c9715904429721da23e0d365db36e387e1260700a9b08f03",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/mneme-api-0.10.1.service",
+      "source_sha256": "4d9865f4021fc2c0c9715904429721da23e0d365db36e387e1260700a9b08f03"
+    },
+    {
+      "archive_path": "deploy/archive/mneme-api-full2.service",
+      "bytes": 659,
+      "sha256": "483dad3ab777b71c9d2a1c11a8e9e4f6793f3ee2b06ecba646d4227f151eff62"
+    },
+    {
+      "archive_path": "deploy/archive/rollback-0.10.1.sh",
+      "bytes": 488,
+      "sha256": "98eefae08f7a131be9a0faaae8ab9b30713bbe5b38cf0e5509a401d6a524cf39",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/rollback-0.10.1.sh",
+      "source_sha256": "98eefae08f7a131be9a0faaae8ab9b30713bbe5b38cf0e5509a401d6a524cf39"
+    },
+    {
+      "archive_path": "evaluation/archive/channel_diagnostic.py",
+      "bytes": 2038,
+      "sha256": "5318bdba6e72866b9474d05ed1168f133547107afc183956c9fb63bbc7c379a6",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/channel_diagnostic.py",
+      "source_sha256": "5318bdba6e72866b9474d05ed1168f133547107afc183956c9fb63bbc7c379a6"
+    },
+    {
+      "archive_path": "evaluation/archive/core_eval/frozen_context_eval.py",
+      "bytes": 30973,
+      "sha256": "4835a4884158aee79180dc9f21cf7ea4cdbcc9148704ee31a19fdfaaaa903b19",
+      "source_path": "/mnt/sv0/sean/research/Mneme/eval/frozen_context_eval.py",
+      "source_sha256": "4835a4884158aee79180dc9f21cf7ea4cdbcc9148704ee31a19fdfaaaa903b19"
+    },
+    {
+      "archive_path": "evaluation/archive/core_eval/llm.py",
+      "bytes": 20604,
+      "sha256": "a4b1a36bb1993421b58c6d8b39154c7f679d37074ef7e38b02c4013aa5c1f4c8",
+      "source_path": "/mnt/sv0/sean/research/Mneme/eval/llm.py",
+      "source_sha256": "a4b1a36bb1993421b58c6d8b39154c7f679d37074ef7e38b02c4013aa5c1f4c8"
+    },
+    {
+      "archive_path": "evaluation/archive/core_eval/memops_answer_eval.py",
+      "bytes": 13680,
+      "sha256": "19165b456c9468df6df31785acb71d1055460e80b53430793cd6270c2d5e0dfa",
+      "source_path": "/mnt/sv0/sean/research/Mneme/eval/memops_answer_eval.py",
+      "source_sha256": "19165b456c9468df6df31785acb71d1055460e80b53430793cd6270c2d5e0dfa"
+    },
+    {
+      "archive_path": "evaluation/archive/core_eval/memops_package_answer_eval.py",
+      "bytes": 12411,
+      "sha256": "e7222048310940f9c5a586fb4c14b314aac2cbe227c009978d69d9e079b66a56",
+      "source_path": "/mnt/sv0/sean/research/Mneme/eval/memops_package_answer_eval.py",
+      "source_sha256": "e7222048310940f9c5a586fb4c14b314aac2cbe227c009978d69d9e079b66a56"
+    },
+    {
+      "archive_path": "evaluation/archive/core_eval/memops_package_contexts.py",
+      "bytes": 14598,
+      "sha256": "58e073491332fe8a165cfeafd0b96ddf0c264cb3dfed1c0a5d1cbcc2e1e51b8b",
+      "source_path": "/mnt/sv0/sean/research/Mneme/eval/memops_package_contexts.py",
+      "source_sha256": "58e073491332fe8a165cfeafd0b96ddf0c264cb3dfed1c0a5d1cbcc2e1e51b8b"
+    },
+    {
+      "archive_path": "evaluation/archive/evidence_fingerprint.py",
+      "bytes": 1382,
+      "sha256": "2dc907b64bed616a5ed1c2ac60ad7a89112f72b642ea9a4b412c8c82d1579887",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/evidence_fingerprint.py",
+      "source_sha256": "2dc907b64bed616a5ed1c2ac60ad7a89112f72b642ea9a4b412c8c82d1579887"
+    },
+    {
+      "archive_path": "evaluation/archive/lme_mneme5_contexts.py",
+      "bytes": 7360,
+      "sha256": "d54fd98cd2a46f30e53ff6c2a539ace0e178b7528c065622f5ec69ed5cda11f7",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/lme_mneme5_contexts.py",
+      "source_sha256": "d54fd98cd2a46f30e53ff6c2a539ace0e178b7528c065622f5ec69ed5cda11f7"
+    },
+    {
+      "archive_path": "evaluation/archive/migrate_050.py",
+      "bytes": 1111,
+      "sha256": "4824187a98020e21a0264b1737f3674dc99ccc2f20424203a00943902cbe782e",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/migrate_050.py",
+      "source_sha256": "4824187a98020e21a0264b1737f3674dc99ccc2f20424203a00943902cbe782e"
+    },
+    {
+      "archive_path": "evaluation/archive/migrate_060.py",
+      "bytes": 1088,
+      "sha256": "bd735d619f2c4b718438dbb1c094b127df0997a09e7f09532780ed126706c2c0",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/migrate_060.py",
+      "source_sha256": "bd735d619f2c4b718438dbb1c094b127df0997a09e7f09532780ed126706c2c0"
+    },
+    {
+      "archive_path": "evaluation/archive/real_store_gate.py",
+      "bytes": 2121,
+      "sha256": "65915d6a8ba2de66e537172885131c32c315d1da9caebd35f49539e791ee62ca",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/real_store_gate.py",
+      "source_sha256": "65915d6a8ba2de66e537172885131c32c315d1da9caebd35f49539e791ee62ca"
+    },
+    {
+      "archive_path": "evaluation/archive_search_metrics.py",
+      "bytes": 1770,
+      "sha256": "1e33dfa01664cefa254ea977eb8955747c511688d5d655e71093338f41391f58"
+    },
+    {
+      "archive_path": "evaluation/replay.py",
+      "bytes": 1449,
+      "sha256": "0b403b99d2a6a86f43623fe3a99aca6a892ac439fdb549a1ba261bea110c0177"
+    },
+    {
+      "archive_path": "evaluation/verify_delivery.py",
+      "bytes": 2520,
+      "sha256": "dc9ccd5179b8012957281d4ac3bd59c154919ed0eb5ef73e29e91b81419c8e53"
+    },
+    {
+      "archive_path": "mneme_api/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "mneme_api/add_metrics.py",
+      "bytes": 2883,
+      "sha256": "0db31e263dcb7447cd9d0cd2e89240d7712e80f26909b4e8aec182aed6547fd9"
+    },
+    {
+      "archive_path": "mneme_api/api.py",
+      "bytes": 11803,
+      "sha256": "830d846475bbe89d7f8a6a2cb9ae3d8758ccbf3477a5fdadcff9f2ac5c04b445"
+    },
+    {
+      "archive_path": "mneme_api/app.py",
+      "bytes": 1608,
+      "sha256": "4ecba71aafb11776b7f0e065e5cd1126c8cdf734c07a550db91cfcb659468ac2"
+    },
+    {
+      "archive_path": "mneme_api/data_model.py",
+      "bytes": 909,
+      "sha256": "0e94ba70f3dbb756c633b0fb15b1763e941b02fc6872a6bfd4eb84675a6264a0"
+    },
+    {
+      "archive_path": "mneme_api/router.py",
+      "bytes": 1331,
+      "sha256": "83b322f44c6c1d779b5fb25e17daf24b0166e06d30c0f0c04ca354267d9062d7"
+    },
+    {
+      "archive_path": "mneme_api/search_metrics.py",
+      "bytes": 3242,
+      "sha256": "8f5599ef74f6609c84350026fd2332673d241a9b87b6cf9524a601516c7f1333"
+    },
+    {
+      "archive_path": "pyproject.toml",
+      "bytes": 747,
+      "sha256": "5b861656b72d761c16495ac3e9b639b0deb7354fc61c325fc201da324e17aceb"
+    },
+    {
+      "archive_path": "reports/aml-cycle2-mneme5-full-retrospective-20261104.md",
+      "bytes": 20904,
+      "sha256": "9a732991a1017668b33ce1b27b46548fe53f1b8c327c368c804e7ee173407d67"
+    },
+    {
+      "archive_path": "reports/aml-full-final-analysis-and-next-run-20261011.md",
+      "bytes": 18065,
+      "sha256": "97ab06a177e7efa94d770be554b2d9b8189b5f958ad953cde9a89454af1cd423"
+    },
+    {
+      "archive_path": "reports/aml-open-source-dimension-leaders-research-20261011.md",
+      "bytes": 23045,
+      "sha256": "cb01f8a01f663e179e63b7b52fc2209abc7e8bacbeff70a0c988c4013f32480a"
+    },
+    {
+      "archive_path": "reports/delivery-20261110.md",
+      "bytes": 7127,
+      "sha256": "c2793e315c7066d93733f7e4830ccae6ad14c6fd53621dc7af584bc7aa7a4889"
+    },
+    {
+      "archive_path": "reports/mneme-0.3.1-aml-smoke-20260928.md",
+      "bytes": 4746,
+      "sha256": "9059e875c9ccf4281453816c6df5801036498b7e7cdf9e023a0b2ce3424cc17c"
+    },
+    {
+      "archive_path": "reports/mneme-0.4.0-aml-smoke-20260929.md",
+      "bytes": 9979,
+      "sha256": "004436bf94879991ddaa3a6ee970dab74f21bc4f394d2369615993eee9a65f67"
+    },
+    {
+      "archive_path": "reports/mneme-store-full-evaluation-performance-requirements-20261001.md",
+      "bytes": 9509,
+      "sha256": "ea63ebc77b916f779629f672a84a79fca1bfbc637145eb180e94eaa38d4a1830"
+    },
+    {
+      "archive_path": "reports/mneme5-competition-upgrade-gate-20261024.md",
+      "bytes": 34810,
+      "sha256": "702aa7630f1af53c818db47b27d9675b2c7f70485fac759bf20cd11b75839abf"
+    },
+    {
+      "archive_path": "reports/mnemekit-0.10.0-mneme5-gate-0-1-20261024.md",
+      "bytes": 6312,
+      "sha256": "bac318a4b721177f303fed24d3f56f9e7311929cb9c615575bcc4b59effa7ce6"
+    },
+    {
+      "archive_path": "reports/mnemekit-0.6.0-deployment-20261005.md",
+      "bytes": 2143,
+      "sha256": "85cf8be84908d35103d9f8cb3a64c26eaa730520ff724a02f23b37bd3c8c10da"
+    },
+    {
+      "archive_path": "reports/mnemekit-0.6.0-full-search-performance-20261009.md",
+      "bytes": 12341,
+      "sha256": "843aa470615b9e19213472a46aee39227fd8718e17a45f04203826fb17e2b8e5"
+    },
+    {
+      "archive_path": "reports/mnemekit-0.8.0-full-search-core-optimization-20261010.md",
+      "bytes": 12894,
+      "sha256": "967b72e3e8f2e52e88dfc1cb0385c577e6a8c5b969d39eedaa4fa9e140869aaa"
+    },
+    {
+      "archive_path": "reports/mnemekit-0.8.1-full-search-live-validation-20261010.md",
+      "bytes": 10623,
+      "sha256": "2e5d3a19e956392ea994c98842339774ec44dfc699ecc2cfce690f3b70831bf2"
+    },
+    {
+      "archive_path": "reports/mnemekit-0.8.2-full-search-live-validation-20261010.md",
+      "bytes": 11810,
+      "sha256": "9ffe6bcd168e016e1384496ce7e3c7fa74c36377d52156187c07de58e1a87f8e"
+    },
+    {
+      "archive_path": "reports/mnemekit-0.8.3-full-search-live-validation-20261010.md",
+      "bytes": 2610,
+      "sha256": "b96956578fac9d8ea9a78905db386a4ca5b6389b3ee146e15d93a4c051298bf5"
+    },
+    {
+      "archive_path": "reports/mnemekit-0.9.1-source-budget-performance-requirement-20261014.md",
+      "bytes": 11141,
+      "sha256": "bcaf02451dac13a79fad2e7a19ba170a9bb81f1c693cefb12e3726652907fb3c"
+    },
+    {
+      "archive_path": "reports/mnemekit-add-atomic-ledger-api-acceptance-20261031.md",
+      "bytes": 6110,
+      "sha256": "cb30c89417d1925b8654ea2f6169092a9d24fffa959e146c06dfb60563595a77"
+    },
+    {
+      "archive_path": "reports/mnemekit-add-atomic-ledger-candidate-20261031.md",
+      "bytes": 6534,
+      "sha256": "4fb29162797ea2b22a9dc8a9471f92ed4fee6c48695641a9a916511e97f3c30b"
+    },
+    {
+      "archive_path": "reports/mnemekit-add-io-performance-requirement-20261031.md",
+      "bytes": 14669,
+      "sha256": "4534774c636fb63e3b29da782c7af4831102236dde8ad0ce9bc6df425b61bd1c"
+    },
+    {
+      "archive_path": "requirements.lock",
+      "bytes": 1038,
+      "sha256": "0b35d38ca13d836e49750b82d25e60d36a1becfe849cf438119233c513143587"
+    },
+    {
+      "archive_path": "results/aml/full1-search-metrics.jsonl",
+      "bytes": 5605410,
+      "sha256": "d99337f1ed468bd68f1e5f15acb42e9db0192d40be26e3acce163ee60739c27e"
+    },
+    {
+      "archive_path": "results/aml/full1-search-summary.json",
+      "bytes": 570,
+      "sha256": "bbb8275cfbe22996ccaf4d55f51b42793dabe6bb91ad8cec1eb1fa3b3d3d6e55"
+    },
+    {
+      "archive_path": "results/aml/full2-search-metrics.jsonl",
+      "bytes": 5774071,
+      "sha256": "afa56f6d8665f69fba3da67d313e02e605bd99bea41670a81c3366814b43e998"
+    },
+    {
+      "archive_path": "results/aml/full2-search-summary.json",
+      "bytes": 1594,
+      "sha256": "0c06b9de76607917bc154632ac381ff93083e39b9a502f703c802136215c2bfb"
+    },
+    {
+      "archive_path": "results/aml/runtime/add-perf-20260929-144739.json",
+      "bytes": 3898,
+      "sha256": "627142efcfa07665d435c9d18bdad64da7d57144309ce3a764bf84d807a655c1",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/add-perf-20260929-144739.json",
+      "source_sha256": "627142efcfa07665d435c9d18bdad64da7d57144309ce3a764bf84d807a655c1"
+    },
+    {
+      "archive_path": "results/aml/runtime/aml-full-1-20260930-143954.json",
+      "bytes": 370,
+      "sha256": "e6aa135e9dceb216d0055f40c58648c2d09455550a60f51ca052c87bab1d22d3",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/aml-full-1-20260930-143954.json",
+      "source_sha256": "e6aa135e9dceb216d0055f40c58648c2d09455550a60f51ca052c87bab1d22d3"
+    },
+    {
+      "archive_path": "results/aml/runtime/aml-full-2-20261030.json",
+      "bytes": 439,
+      "sha256": "d2d1592adaab2f971f370864e2ea17a9557bd3918ef930b4958589bb4d6ffc81",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/aml-full-2-20261030.json",
+      "source_sha256": "d2d1592adaab2f971f370864e2ea17a9557bd3918ef930b4958589bb4d6ffc81"
+    },
+    {
+      "archive_path": "results/aml/runtime/aml-integration-smoke-0.10.1.json",
+      "bytes": 407,
+      "sha256": "dbe3800e45d4202b666a1858289557aa4d259c0112ed23a360b9af370a5d7cc0",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/aml-integration-smoke-0.10.1.json",
+      "source_sha256": "dbe3800e45d4202b666a1858289557aa4d259c0112ed23a360b9af370a5d7cc0"
+    },
+    {
+      "archive_path": "results/aml/runtime/aml-smoke-20260928-075854.json",
+      "bytes": 441,
+      "sha256": "44744f4f78990b0af16b9f36bc7946ae1a62cc0b58549b47740990138dc046e4",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/aml-smoke-20260928-075854.json",
+      "source_sha256": "44744f4f78990b0af16b9f36bc7946ae1a62cc0b58549b47740990138dc046e4"
+    },
+    {
+      "archive_path": "results/aml/runtime/aml-smoke-20260929-064135.json",
+      "bytes": 370,
+      "sha256": "3e103df7e09965b0d7d41763edfcb1f0f01781be63d10018e845eff795a22c09",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/aml-smoke-20260929-064135.json",
+      "source_sha256": "3e103df7e09965b0d7d41763edfcb1f0f01781be63d10018e845eff795a22c09"
+    },
+    {
+      "archive_path": "results/aml/runtime/aml-smoke-20260929-074156.json",
+      "bytes": 377,
+      "sha256": "aaadd6983b10d3f3669214f7bdd5cebb0dceecbee2b6fbf811ae389a28087f3f",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/aml-smoke-20260929-074156.json",
+      "source_sha256": "aaadd6983b10d3f3669214f7bdd5cebb0dceecbee2b6fbf811ae389a28087f3f"
+    },
+    {
+      "archive_path": "results/aml/runtime/aml-smoke-20260930-024616.json",
+      "bytes": 378,
+      "sha256": "9eda5b79f62d6b949566b82eda118f0f332896403fb62f71c8e6417215739eb1",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/aml-smoke-20260930-024616.json",
+      "source_sha256": "9eda5b79f62d6b949566b82eda118f0f332896403fb62f71c8e6417215739eb1"
+    },
+    {
+      "archive_path": "results/aml/runtime/aml-smoke.json",
+      "bytes": 266,
+      "sha256": "cfe632267e01f298f8b6172418fd9b8efbe1b682092a348b87b2b527f9f0c55e",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/aml-smoke.json",
+      "source_sha256": "cfe632267e01f298f8b6172418fd9b8efbe1b682092a348b87b2b527f9f0c55e"
+    },
+    {
+      "archive_path": "results/aml/runtime/channel-v1-r2-final.json",
+      "bytes": 15233,
+      "sha256": "5858e721adc46571726e2811c12d94c8b25768f312f77bc6bf31096f693bd21c",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/channel-v1-r2-final.json",
+      "source_sha256": "5858e721adc46571726e2811c12d94c8b25768f312f77bc6bf31096f693bd21c"
+    },
+    {
+      "archive_path": "results/aml/runtime/channel-v1.json",
+      "bytes": 4920,
+      "sha256": "63abdceb80d649c5e6817f8dca1593d740111bd00423d4ae28950e91e4889218",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/channel-v1.json",
+      "source_sha256": "63abdceb80d649c5e6817f8dca1593d740111bd00423d4ae28950e91e4889218"
+    },
+    {
+      "archive_path": "results/aml/runtime/channel-v2-r2-final.json",
+      "bytes": 16934,
+      "sha256": "50d8cafb92dd9f9fcc0efafc8f3932a1e291d5287a65433c102f176c27f65176",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/channel-v2-r2-final.json",
+      "source_sha256": "50d8cafb92dd9f9fcc0efafc8f3932a1e291d5287a65433c102f176c27f65176"
+    },
+    {
+      "archive_path": "results/aml/runtime/channel-v2-r2.json",
+      "bytes": 4910,
+      "sha256": "0b1bb1b4646e5e96b0fd3bc4fdc2705d7ff0f5f01a21ab64f78cbaed45ba4ccc",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/channel-v2-r2.json",
+      "source_sha256": "0b1bb1b4646e5e96b0fd3bc4fdc2705d7ff0f5f01a21ab64f78cbaed45ba4ccc"
+    },
+    {
+      "archive_path": "results/aml/runtime/competition-0.10.1-lme-answer.json",
+      "bytes": 5994,
+      "sha256": "e8a103be5af19511f1789148323b8d5f343706de2bf747ab1c71fb780126063f",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-lme-answer.json",
+      "source_sha256": "e8a103be5af19511f1789148323b8d5f343706de2bf747ab1c71fb780126063f"
+    },
+    {
+      "archive_path": "results/aml/runtime/competition-0.10.1-memops-answer.json",
+      "bytes": 4844,
+      "sha256": "fb07b8302771d287072d2a569257a335f575c0f4ee1fc705a99afb1ed0ae4656",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-memops-answer.json",
+      "source_sha256": "fb07b8302771d287072d2a569257a335f575c0f4ee1fc705a99afb1ed0ae4656"
+    },
+    {
+      "archive_path": "results/aml/runtime/competition-0.10.1-stale-heldout.json",
+      "bytes": 280326,
+      "sha256": "20646f400b5b8a6088596a9558d4e225c8bcf356ae0c856266a0678cbf5191b1",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-stale-heldout.json",
+      "source_sha256": "20646f400b5b8a6088596a9558d4e225c8bcf356ae0c856266a0678cbf5191b1"
+    },
+    {
+      "archive_path": "results/aml/runtime/cycle1-academic-textual.json",
+      "bytes": 247170,
+      "sha256": "68adcc9158a6f1c5062a2484f88773844e0480e122eca9f2a38f34a408869403",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/cycle1-academic-textual.json",
+      "source_sha256": "68adcc9158a6f1c5062a2484f88773844e0480e122eca9f2a38f34a408869403"
+    },
+    {
+      "archive_path": "results/aml/runtime/cycle1-industry-textual.json",
+      "bytes": 73533,
+      "sha256": "70fae85fbfd07517f3a5234ecc2269b0632743d2fb8ded49a84bba08ae80c1a8",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/cycle1-industry-textual.json",
+      "source_sha256": "70fae85fbfd07517f3a5234ecc2269b0632743d2fb8ded49a84bba08ae80c1a8"
+    },
+    {
+      "archive_path": "results/aml/runtime/dbstat-r2.json",
+      "bytes": 2715,
+      "sha256": "938f98ade713c29971e667b227d33bbb8ffb833c89cb2eeae8ad1df135df1cf9",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/dbstat-r2.json",
+      "source_sha256": "938f98ade713c29971e667b227d33bbb8ffb833c89cb2eeae8ad1df135df1cf9"
+    },
+    {
+      "archive_path": "results/aml/runtime/dbstat-r3.json",
+      "bytes": 2693,
+      "sha256": "0a02c98e31c7285fb0df5aa4a43b8a2a4f50cd5269081eb21a354595cadb2e69",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/dbstat-r3.json",
+      "source_sha256": "0a02c98e31c7285fb0df5aa4a43b8a2a4f50cd5269081eb21a354595cadb2e69"
+    },
+    {
+      "archive_path": "results/aml/runtime/fingerprint-v1.json",
+      "bytes": 224823,
+      "sha256": "bf2bad53c27fd320f8710c1407a0ca3cf41a9cb5ac8e4d38d0292ba7ba02e484",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/fingerprint-v1.json",
+      "source_sha256": "bf2bad53c27fd320f8710c1407a0ca3cf41a9cb5ac8e4d38d0292ba7ba02e484"
+    },
+    {
+      "archive_path": "results/aml/runtime/fingerprint-v2-r2.json",
+      "bytes": 224803,
+      "sha256": "635fb4e01ab103601deecad3fceff5f48e437ff58962ff10eb946db2bd797d31",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/fingerprint-v2-r2.json",
+      "source_sha256": "635fb4e01ab103601deecad3fceff5f48e437ff58962ff10eb946db2bd797d31"
+    },
+    {
+      "archive_path": "results/aml/runtime/fingerprint-v2.json",
+      "bytes": 224803,
+      "sha256": "635fb4e01ab103601deecad3fceff5f48e437ff58962ff10eb946db2bd797d31",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/fingerprint-v2.json",
+      "source_sha256": "635fb4e01ab103601deecad3fceff5f48e437ff58962ff10eb946db2bd797d31"
+    },
+    {
+      "archive_path": "results/aml/runtime/full-evaluation-result.json",
+      "bytes": 7794,
+      "sha256": "b1b802ee742319e115bf9c6cda8650d3dcce6c4d3d557eda711cedf3ab1d745e",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/full-evaluation-result.json",
+      "source_sha256": "b1b802ee742319e115bf9c6cda8650d3dcce6c4d3d557eda711cedf3ab1d745e"
+    },
+    {
+      "archive_path": "results/aml/runtime/full-final-analysis-summary.json",
+      "bytes": 42225,
+      "sha256": "e9c27daec5d0f17c42611f63f81beba6dfdfd2ef4ce8cefd1003158ac6e2370b",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/full-final-analysis-summary.json",
+      "source_sha256": "e9c27daec5d0f17c42611f63f81beba6dfdfd2ef4ce8cefd1003158ac6e2370b"
+    },
+    {
+      "archive_path": "results/aml/runtime/full-private-results.json",
+      "bytes": 4115,
+      "sha256": "d9388484a03669e025add3c27be5a058bf456c32ef2eeffd2e390c059208abfa",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/full-private-results.json",
+      "source_sha256": "d9388484a03669e025add3c27be5a058bf456c32ef2eeffd2e390c059208abfa"
+    },
+    {
+      "archive_path": "results/aml/runtime/server.log",
+      "bytes": 351,
+      "sha256": "23be5d455541d04bc241aa9cc482baf58099d875d81c9249d2d4f3a814cfea44",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/server.log",
+      "source_sha256": "23be5d455541d04bc241aa9cc482baf58099d875d81c9249d2d4f3a814cfea44"
+    },
+    {
+      "archive_path": "results/aml/runtime/upgrade-check.json",
+      "bytes": 676,
+      "sha256": "608d9d8d690f5ee3edefd3399fc5738475b3731428d46d5c5c0a8948c18b7b26",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/upgrade-check.json",
+      "source_sha256": "608d9d8d690f5ee3edefd3399fc5738475b3731428d46d5c5c0a8948c18b7b26"
+    },
+    {
+      "archive_path": "results/competition/competition-0.10.1-lme-answer_rep0.jsonl",
+      "bytes": 199470,
+      "sha256": "9466c46cbdbd27915f4e67ab2f086f3db41ea64dffa285bb212f74c0a3c3d5bb",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-lme-answer_rep0.jsonl",
+      "source_sha256": "9466c46cbdbd27915f4e67ab2f086f3db41ea64dffa285bb212f74c0a3c3d5bb"
+    },
+    {
+      "archive_path": "results/competition/competition-0.10.1-lme-answer_rep1.jsonl",
+      "bytes": 199386,
+      "sha256": "050c8c892762914ef95e50150807a51f46e51572515b0568dd104a7f931bebf8",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-lme-answer_rep1.jsonl",
+      "source_sha256": "050c8c892762914ef95e50150807a51f46e51572515b0568dd104a7f931bebf8"
+    },
+    {
+      "archive_path": "results/competition/competition-0.10.1-lme-answer_rep2.jsonl",
+      "bytes": 199532,
+      "sha256": "cdae9314f8218e1106d5c250f98732d0cb3a55f02ee22d89f9d2f00801538f53",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-lme-answer_rep2.jsonl",
+      "source_sha256": "cdae9314f8218e1106d5c250f98732d0cb3a55f02ee22d89f9d2f00801538f53"
+    },
+    {
+      "archive_path": "results/competition/competition-0.10.1-memops-answer_rep0.jsonl",
+      "bytes": 425391,
+      "sha256": "66507b6aa79ac16583f53bc5a70a4b1201723e856020bd87cc2a81b2de5fa58a",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-memops-answer_rep0.jsonl",
+      "source_sha256": "66507b6aa79ac16583f53bc5a70a4b1201723e856020bd87cc2a81b2de5fa58a"
+    },
+    {
+      "archive_path": "results/competition/competition-0.10.1-memops-answer_rep1.jsonl",
+      "bytes": 426847,
+      "sha256": "7ef7364ccae4598fec1311519d75d4f8fcc0b023b46d143c6fe8474d5e71fabd",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-memops-answer_rep1.jsonl",
+      "source_sha256": "7ef7364ccae4598fec1311519d75d4f8fcc0b023b46d143c6fe8474d5e71fabd"
+    },
+    {
+      "archive_path": "results/competition/competition-0.10.1-memops-answer_rep2.jsonl",
+      "bytes": 424605,
+      "sha256": "9f2271aa48b275d2604ff75b01afd155bc50ed32fbe61c6bd545633f62e57460",
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-memops-answer_rep2.jsonl",
+      "source_sha256": "9f2271aa48b275d2604ff75b01afd155bc50ed32fbe61c6bd545633f62e57460"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-context-audit.json",
+      "bytes": 1167,
+      "sha256": "d796381bfb825fe2599678d08ae1ddaab86c42d9ee300c7b256a5a3b3e83f306",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-context-audit.json",
+      "source_sha256": "d796381bfb825fe2599678d08ae1ddaab86c42d9ee300c7b256a5a3b3e83f306"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-lme-answer-rep2-report.json",
+      "bytes": 950,
+      "sha256": "27a5d9efd35f91b58fbcac0d58ebbf88450cdf1980a287d364bd8595fa1af8cb",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-answer-rep2-report.json",
+      "source_sha256": "27a5d9efd35f91b58fbcac0d58ebbf88450cdf1980a287d364bd8595fa1af8cb"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-lme-answer-report.json",
+      "bytes": 6156,
+      "sha256": "2216ff13c90b3eb7cdc7c9c1af9523694352d2e3fbbc04ab541f18fec91c5c03",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-answer-report.json",
+      "source_sha256": "2216ff13c90b3eb7cdc7c9c1af9523694352d2e3fbbc04ab541f18fec91c5c03"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-lme-answer-report_rep0.jsonl",
+      "bytes": 197770,
+      "sha256": "5f399d01e9cc11869e7b43ee11d4cfc4265f4ec2b14ca6bdf1dc2a0424bdb2f8",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-answer-report_rep0.jsonl",
+      "source_sha256": "5f399d01e9cc11869e7b43ee11d4cfc4265f4ec2b14ca6bdf1dc2a0424bdb2f8"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-lme-answer-report_rep1.jsonl",
+      "bytes": 197857,
+      "sha256": "1474a992aa0adb36f13a245e9eb8a5850f4acd21c63edce9634ab63552f85f46",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-answer-report_rep1.jsonl",
+      "source_sha256": "1474a992aa0adb36f13a245e9eb8a5850f4acd21c63edce9634ab63552f85f46"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-lme-answer-report_rep2.jsonl",
+      "bytes": 197860,
+      "sha256": "1ac330ee898bde8a2eab2f7c67617d7734d4cf6902917156b4a5f22d280f398e",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-answer-report_rep2.jsonl",
+      "source_sha256": "1ac330ee898bde8a2eab2f7c67617d7734d4cf6902917156b4a5f22d280f398e"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-locomo-answer-rep2-report.json",
+      "bytes": 825,
+      "sha256": "fa29761f850b9bb8f29a99fa2f58d93516959e482ee2b1981f844cdc8675e4d6",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-answer-rep2-report.json",
+      "source_sha256": "fa29761f850b9bb8f29a99fa2f58d93516959e482ee2b1981f844cdc8675e4d6"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-locomo-answer-report.json",
+      "bytes": 5164,
+      "sha256": "1fa5d029a02fb143fae2df0cb2fffe7ba17d15f6e6fb1b4cac47043f0580b1c4",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-answer-report.json",
+      "source_sha256": "1fa5d029a02fb143fae2df0cb2fffe7ba17d15f6e6fb1b4cac47043f0580b1c4"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-locomo-answer-report_rep0.jsonl",
+      "bytes": 711920,
+      "sha256": "36ba52d30efaf966b9402ed30313d1ecfca5648f65c73923ca17bc6c701b12ce",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-answer-report_rep0.jsonl",
+      "source_sha256": "36ba52d30efaf966b9402ed30313d1ecfca5648f65c73923ca17bc6c701b12ce"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-locomo-answer-report_rep1.jsonl",
+      "bytes": 712178,
+      "sha256": "868e98a640b849ce4ea770f84a753d85a82a47d34faecc431066d05ad4709bae",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-answer-report_rep1.jsonl",
+      "source_sha256": "868e98a640b849ce4ea770f84a753d85a82a47d34faecc431066d05ad4709bae"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-locomo-answer-report_rep2.jsonl",
+      "bytes": 712369,
+      "sha256": "519d51efc2201094a74ff4f0f5b08447541b0b5bf46a4c7f32cc858d420748fe",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-answer-report_rep2.jsonl",
+      "source_sha256": "519d51efc2201094a74ff4f0f5b08447541b0b5bf46a4c7f32cc858d420748fe"
+    },
+    {
+      "archive_path": "results/core-gates/gate-b-locomo-cache-rerun.log",
+      "bytes": 20303,
+      "sha256": "3d2216bc5e5d94854457462cef876ea8373bba653e640692540ee204d7bead40",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-cache-rerun.log",
+      "source_sha256": "3d2216bc5e5d94854457462cef876ea8373bba653e640692540ee204d7bead40"
+    },
+    {
+      "archive_path": "results/core-gates/memops-package-answer-cache-rerun.log",
+      "bytes": 11728,
+      "sha256": "21e6b3333bd728703f2e019bbab30134f6d3b52d61279fdd4446df3add17e646",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-answer-cache-rerun.log",
+      "source_sha256": "21e6b3333bd728703f2e019bbab30134f6d3b52d61279fdd4446df3add17e646"
+    },
+    {
+      "archive_path": "results/core-gates/memops-package-answer-smoke-report.json",
+      "bytes": 1674,
+      "sha256": "e1167a4da2d0c2f7f2d36fbbf075f125da14b67dbb3b9bd0c4cf086fee9a8ff4",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-answer-smoke-report.json",
+      "source_sha256": "e1167a4da2d0c2f7f2d36fbbf075f125da14b67dbb3b9bd0c4cf086fee9a8ff4"
+    },
+    {
+      "archive_path": "results/core-gates/memops-package-answer-smoke-report_rep0.jsonl",
+      "bytes": 2292,
+      "sha256": "44298bfd2a7c8f2c376cd3c8012df6fa0a0ee3466eda37555e914390eee797ee",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-answer-smoke-report_rep0.jsonl",
+      "source_sha256": "44298bfd2a7c8f2c376cd3c8012df6fa0a0ee3466eda37555e914390eee797ee"
+    },
+    {
+      "archive_path": "results/core-gates/memops-package-answer-top100-report.json",
+      "bytes": 5325,
+      "sha256": "b2ed2e9407bb8bd3b048f469880c0ea832956f7066c6e61120abb3b3b627143a",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-answer-top100-report.json",
+      "source_sha256": "b2ed2e9407bb8bd3b048f469880c0ea832956f7066c6e61120abb3b3b627143a"
+    },
+    {
+      "archive_path": "results/core-gates/memops-package-answer-top100-report_rep0.jsonl",
+      "bytes": 420485,
+      "sha256": "06f14e7bafb2d20ea05d2025f65aa2f8502f1a9b96a229d34b94122bdeb99dfa",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-answer-top100-report_rep0.jsonl",
+      "source_sha256": "06f14e7bafb2d20ea05d2025f65aa2f8502f1a9b96a229d34b94122bdeb99dfa"
+    },
+    {
+      "archive_path": "results/core-gates/memops-package-answer-top100-report_rep1.jsonl",
+      "bytes": 422517,
+      "sha256": "3a5f87cc5bbccbe38be293eff6e97b20ae501fc4b139b5687a75aa65965cbf3a",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-answer-top100-report_rep1.jsonl",
+      "source_sha256": "3a5f87cc5bbccbe38be293eff6e97b20ae501fc4b139b5687a75aa65965cbf3a"
+    },
+    {
+      "archive_path": "results/core-gates/memops-package-answer-top100-report_rep2.jsonl",
+      "bytes": 421911,
+      "sha256": "1820f86cdbb5508968b71f1da574eb0a0c4555651cc652d69c7413b46787f108",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-answer-top100-report_rep2.jsonl",
+      "source_sha256": "1820f86cdbb5508968b71f1da574eb0a0c4555651cc652d69c7413b46787f108"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-lme-answer-gate.json",
+      "bytes": 6126,
+      "sha256": "9a1634dab6882ab2519350f410795674b2e72efe86a7edc63f94816fddb30cec",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-lme-answer-gate.json",
+      "source_sha256": "9a1634dab6882ab2519350f410795674b2e72efe86a7edc63f94816fddb30cec"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-lme-answer-gate_rep0.jsonl",
+      "bytes": 199225,
+      "sha256": "6ffd24aa85c777a4c8e210cc5f2793daa12b8d06640363741b031be4da77f635",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-lme-answer-gate_rep0.jsonl",
+      "source_sha256": "6ffd24aa85c777a4c8e210cc5f2793daa12b8d06640363741b031be4da77f635"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-lme-answer-gate_rep1.jsonl",
+      "bytes": 199025,
+      "sha256": "4f963404ce7791293be824b4f8cff58b1dc34845e4cc8655c4bd3f3451e45e5e",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-lme-answer-gate_rep1.jsonl",
+      "source_sha256": "4f963404ce7791293be824b4f8cff58b1dc34845e4cc8655c4bd3f3451e45e5e"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-lme-answer-gate_rep2.jsonl",
+      "bytes": 198969,
+      "sha256": "a55e3002a2520c259c2070c65d8e013ead8bd18b477c6a86cd7dadf8dd6cfa2a",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-lme-answer-gate_rep2.jsonl",
+      "source_sha256": "a55e3002a2520c259c2070c65d8e013ead8bd18b477c6a86cd7dadf8dd6cfa2a"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-answer-gate.json",
+      "bytes": 5310,
+      "sha256": "ee5fa784b9897c858b90893542ad7044123d9a9bdd211b71d9dcab3c47b2527d",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-answer-gate.json",
+      "source_sha256": "ee5fa784b9897c858b90893542ad7044123d9a9bdd211b71d9dcab3c47b2527d"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-answer-gate_rep0.jsonl",
+      "bytes": 425418,
+      "sha256": "99e1577d9fac4a238d31910b523c868e29dfce33d9cac6c5b48951f7c437d7a1",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-answer-gate_rep0.jsonl",
+      "source_sha256": "99e1577d9fac4a238d31910b523c868e29dfce33d9cac6c5b48951f7c437d7a1"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-answer-gate_rep1.jsonl",
+      "bytes": 428088,
+      "sha256": "6a5bc43a2107c65e03785a06efcd7c1bca5173203108dd71cf9695653954b338",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-answer-gate_rep1.jsonl",
+      "source_sha256": "6a5bc43a2107c65e03785a06efcd7c1bca5173203108dd71cf9695653954b338"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-answer-gate_rep2.jsonl",
+      "bytes": 425425,
+      "sha256": "8b0f50dceee2431ad9e1f09d7615db0f67e61fc953be35054fdc323fd081f0bd",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-answer-gate_rep2.jsonl",
+      "source_sha256": "8b0f50dceee2431ad9e1f09d7615db0f67e61fc953be35054fdc323fd081f0bd"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-source-route-probe-baseline.jsonl",
+      "bytes": 448695,
+      "sha256": "374e364075e930229218b617c898e361977a79a5f52af17319d8612f0cc346fa",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-source-route-probe-baseline.jsonl",
+      "source_sha256": "374e364075e930229218b617c898e361977a79a5f52af17319d8612f0cc346fa"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-source-route-probe-candidate.jsonl",
+      "bytes": 450353,
+      "sha256": "ef87bff0d166881cbcf2b311fee77f88a9cd4c04024ded44b3d3cb0f86a9e3f9",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-source-route-probe-candidate.jsonl",
+      "source_sha256": "ef87bff0d166881cbcf2b311fee77f88a9cd4c04024ded44b3d3cb0f86a9e3f9"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-source-route-probe.json",
+      "bytes": 4139,
+      "sha256": "4eba17db66573891161ec81e851a1783ea08a8c969458f87c7b9e51322ad35e9",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-source-route-probe.json",
+      "source_sha256": "4eba17db66573891161ec81e851a1783ea08a8c969458f87c7b9e51322ad35e9"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-source-route-probe_rep0.jsonl",
+      "bytes": 4656,
+      "sha256": "87d9f542dbf7d6720cc3b676968c16b11e376ec09d79d89e6aa319b75b9e18be",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-source-route-probe_rep0.jsonl",
+      "source_sha256": "87d9f542dbf7d6720cc3b676968c16b11e376ec09d79d89e6aa319b75b9e18be"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-source-route-probe_rep1.jsonl",
+      "bytes": 4492,
+      "sha256": "81932efc4ee601617050baa18adaa543bea66ac69f63f6d21f1eb7ce5f2380b8",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-source-route-probe_rep1.jsonl",
+      "source_sha256": "81932efc4ee601617050baa18adaa543bea66ac69f63f6d21f1eb7ce5f2380b8"
+    },
+    {
+      "archive_path": "results/core-gates/mneme5-memops-source-route-probe_rep2.jsonl",
+      "bytes": 4481,
+      "sha256": "fb21995a3b9f775e6228ff50a37e714ca153586302429cec8b68753ee3749d69",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/mneme5-memops-source-route-probe_rep2.jsonl",
+      "source_sha256": "fb21995a3b9f775e6228ff50a37e714ca153586302429cec8b68753ee3749d69"
+    },
+    {
+      "archive_path": "results/core-gates/source-budget-perf-0.9.2-20261014.json",
+      "bytes": 3770,
+      "sha256": "aebc3358d0a31877c41805685e5d1ca8a3860acb3a5844091c091ffbfe1d7d39",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/source-budget-perf-0.9.2-20261014.json",
+      "source_sha256": "aebc3358d0a31877c41805685e5d1ca8a3860acb3a5844091c091ffbfe1d7d39"
+    },
+    {
+      "archive_path": "results/official-summary.json",
+      "bytes": 2752,
+      "sha256": "ebbdfa4bbae44b21ad3af0b3aae9f313e24ecac9f05f8fda89dbbcfa3b9e333b"
+    },
+    {
+      "archive_path": "results/real-store/manifest.json",
+      "bytes": 1164,
+      "sha256": "2727661398823aded0b8f42e0b857ad0c46c93579d54d7c805777fccf1f67c5e",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/full-store-1112-20261010/manifest.json",
+      "source_sha256": "b2d959bcd879e0aba2337ffd13361b4d6e2d45f4c9e3cd0598f25ed42f53b3fa"
+    },
+    {
+      "archive_path": "results/real-store/metric-heavy-latest.json",
+      "bytes": 156,
+      "sha256": "abe5996226819700d7c673cf356ae0f8155a854aff481e415f13b0d155464482",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/full-store-1112-20261010/metric-heavy-latest.json",
+      "source_sha256": "abe5996226819700d7c673cf356ae0f8155a854aff481e415f13b0d155464482"
+    },
+    {
+      "archive_path": "results/real-store/metric-latest.json",
+      "bytes": 156,
+      "sha256": "d577bd5c954f0846903d2ffb22a8bcdda0bb1866895c8d3a03ae857d98a8464e",
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/full-store-1112-20261010/metric-latest.json",
+      "source_sha256": "d577bd5c954f0846903d2ffb22a8bcdda0bb1866895c8d3a03ae857d98a8464e"
+    },
+    {
+      "archive_path": "results/validation.json",
+      "bytes": 1149,
+      "sha256": "3866e1286e52c485347567e847f8ec3d82edd05b86d375ebe27e21b419a55684"
+    },
+    {
+      "archive_path": "tests/test_api.py",
+      "bytes": 14427,
+      "sha256": "18c3b33e810bdbe2a317854619e33768e31917001a77c0da21e55730c6d87f21"
+    },
+    {
+      "archive_path": "uv.lock",
+      "bytes": 403004,
+      "sha256": "c8946d60a38ff0aa324ba7f180558f5108740e9f0087adc87eb9c99d89ca0cbd"
+    }
+  ],
+  "excluded_files": [
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/full-store-1112-20261010/queries.json",
+      "bytes": 7081,
+      "sha256": "299d959ac93fb1a4173798192f61bb0d9023638e19f8d183e51e9fd772978c92",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/full-store-1112-20261010/requests.sqlite3",
+      "bytes": 19619840,
+      "sha256": "556504a0c2d00a915ec49dbc1729e257cfbb7ac0520ae9300811d44aa74484c8",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/full-store-1112-20261010/store.sqlite3",
+      "bytes": 1687867392,
+      "sha256": "7acb1fef07bf326fe45bcd2712f9a2010f8b48713f9d77219331a8879f830c8d",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-0.10.0.jsonl",
+      "bytes": 26642357,
+      "sha256": "06ce83c9723292eb5dcd7f9ffa465312383ec04ed2ba45c51cf70961151b5eb7",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-0.8.3-source40-derived.jsonl",
+      "bytes": 30198323,
+      "sha256": "07947625f4ae0ed25327758f3c29a3cae725e09f3f555db77b5316cbffac8076",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-0.8.3-source40.jsonl",
+      "bytes": 30197433,
+      "sha256": "52f5b0775b9f95acc9afb2de2ed3f1442962d846f59832d5d02b312c4133ca22",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-0.8.3.jsonl",
+      "bytes": 40018481,
+      "sha256": "b2c24f681416b5acf6f2972c79a2f9389f20c4ec0a3a77d11f303e60b6417284",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-lme-0.9.2.jsonl",
+      "bytes": 34771742,
+      "sha256": "8faec11630030c52e96898dc85f0fb1ffab6beb06d3d137540812cffb941d60b",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-0.8.3-persistent-sample.jsonl",
+      "bytes": 10735061,
+      "sha256": "e58e7931aee106284bdfaab45c89d4087a5f2ceb96eba49e717d017154bb0024",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-0.8.3-source40.jsonl",
+      "bytes": 41724643,
+      "sha256": "f0e9b12ef062744c0b1e12cd032bd7fd507b35d53d0c8f6c22bfae0921b7d464",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-0.8.3.jsonl",
+      "bytes": 107298634,
+      "sha256": "2d87679ecffcdd4164de4b447832fbcb36b03bcb2976c84bf3a50e2006db213d",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-0.9.2-persistent-sample.jsonl",
+      "bytes": 4372409,
+      "sha256": "82619288a3887c7b3389654dac0fe7092d3afec20a5f0cd304eda82dc219da67",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/gate-b-locomo-0.9.2.jsonl",
+      "bytes": 43530392,
+      "sha256": "617346da05547c81014afd5689f17bd3964d88ea4f9fb7ab9ca21b174aeef7e4",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-0.8.3.jsonl",
+      "bytes": 5577373,
+      "sha256": "d26fbfe99246d01d607c4df0706e9b28f439563af34334b98f348452f0cc9622",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-0.9.2.jsonl",
+      "bytes": 1164232,
+      "sha256": "28500382aa56cf375d26b1d2a232acbfd1c6a0e894bad7768ed0b7a11a8a4201",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-memory-0.10.0-smoke.jsonl",
+      "bytes": 436576,
+      "sha256": "0216fa222503ed25e0becc9d720f1bf48fc373ce80586a6532d2904932d1e621",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-memory-0.10.0.jsonl",
+      "bytes": 56668022,
+      "sha256": "616e6825d726d785cd953b5dd0f1092ed1a3f272b15872cb840636209655bb2b",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-memory-0.10.1-source-route-frontier40-v2.jsonl",
+      "bytes": 3903065,
+      "sha256": "3daee0c460a7a9eb43edfd608dd2aa08f390324350f1c1f5c2843f3c5877d987",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-memory-0.10.1-source-route-frontier40.jsonl",
+      "bytes": 33430942,
+      "sha256": "fd3f009a738f3b9c1614d68649e168b4d6f5236871b0135b7c543b16edde79e3",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-memory-0.10.1-source-route.jsonl",
+      "bytes": 57044050,
+      "sha256": "10ff4a140012778c3fe75e575e9c45c323d2e2cd0b1172ef0b9789080b9c77c9",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-memory-0.8.3.jsonl",
+      "bytes": 65534460,
+      "sha256": "a24c73bc254e3f4db3c9f8e9b19251ac86167d23065c59147be5720a5489a785",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-heldout-memory-0.9.2.jsonl",
+      "bytes": 56705806,
+      "sha256": "5b97a9d67671d9ceaa77098cab57dde6db70e8d5886fe52fb620900881d7cf44",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-memory-smoke-0.8.3.jsonl",
+      "bytes": 419730,
+      "sha256": "4e50b16bc0d43ce1bf71bc4874ef5142380426db0ca0f2f343945db55ce6c9a6",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-memory-smoke-0.9.2.jsonl",
+      "bytes": 436576,
+      "sha256": "0216fa222503ed25e0becc9d720f1bf48fc373ce80586a6532d2904932d1e621",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-smoke-0.8.3.jsonl",
+      "bytes": 419730,
+      "sha256": "4e50b16bc0d43ce1bf71bc4874ef5142380426db0ca0f2f343945db55ce6c9a6",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/Mneme/.runtime/memops-package-smoke-0.9.2.jsonl",
+      "bytes": 436576,
+      "sha256": "0216fa222503ed25e0becc9d720f1bf48fc373ce80586a6532d2904932d1e621",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-lme-contexts.jsonl",
+      "bytes": 33430598,
+      "sha256": "455ef12629ab7b8383227c39b4307139a3db231112735b053a72d4ad304f8337",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/competition-0.10.1-memops-contexts.jsonl",
+      "bytes": 56703615,
+      "sha256": "5bd543c2a40bbe4fd22b9f44bd2889bad796f4dff36c5d77020df94fb8cbb739",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/full-archive-20261010/search-metrics.jsonl",
+      "bytes": 745994092,
+      "sha256": "e38a0c2d042ca9d6c7c1e8e9f84f3fa95bdc594420892f89595bd04cce70b442",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/full2-search-metrics-original.jsonl",
+      "bytes": 117086456,
+      "sha256": "8f8828994ff70cd3994246f68fa1f42170bcc94e0429bc527aceb572726f139d",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/requests.jsonl",
+      "bytes": 628008,
+      "sha256": "bf8fd203d5082f6f57563ab82cf59fbd4765795e17f1e3e10217258f91dc0090",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/search-metrics-20260930(1).jsonl",
+      "bytes": 466277,
+      "sha256": "3e082fe1fa729d61f63ab00fe87ededd396051a22819b4fae61edaea5e5454ea",
+      "reason": "Raw Store/private evaluation text or large regenerable context; numeric metrics, reports and predictions are archived separately."
+    }
+  ],
+  "excluded_categories": [
+    "Credentials and private keys (*.pem, *.env, .runtime/api-key)",
+    "Virtual environments, bytecode, pytest/uv caches, package builds and egg-info",
+    "Derived test/replay databases, migration copies and downloaded datasets",
+    "Third-party nested repositories (pinned below)",
+    "Remote production Store /var/lib/mneme-api-full2-20261030: private evaluation state, approx 60 GiB; retained remotely, not copied or scanned in full"
+  ],
+  "third_party_references": [
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/active-memory-index",
+      "head": "7a6e152340a784883e241dd37e6ef399b21a4be8",
+      "origin": "https://github.com/linxuhao/ActiveMemoryIndex.git"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/chrono-hybrid",
+      "head": "a8411527aa803f84b984227a455fd51ba193de1f",
+      "origin": "https://github.com/Tin11Mn/chrono-hybrid-mem"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/hybrid-episodic",
+      "head": "9db3399a7ccf8c1a46bcc3c204cdad20e8e8b6ba",
+      "origin": "https://github.com/tlysanhuo/agent-memory-challenge"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/hybrid-search",
+      "head": "8ca665c4f697cc936b2326b5f42d9cf1756e2af3",
+      "origin": "https://github.com/cydd-1972/hybrid_search"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/infini-memory",
+      "head": "bbee77b92a11cb0dee95f1d613dccf1d66e20ad6",
+      "origin": "https://github.com/infinigence/Infini-Memory"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/invmem",
+      "head": "31ab7bf9cfa3ee3c4f986e82f6e7a00b134ba8ca",
+      "origin": "https://github.com/wenxiaof345-ctrl/vanilla-rag-memory"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/m-flow",
+      "head": "0d585cda2f588af69fb872ae6914caba0c217816",
+      "origin": "https://github.com/FlowElement-xinliuyuansu/m_flow"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/mem0",
+      "head": "b7ad69afda6b6ed030347c66d48a13e4de9dec08",
+      "origin": "https://github.com/mem0ai/mem0"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/mem0-bqe",
+      "head": "a1b1debf8d6b219826dff5a0934c06a046872882",
+      "origin": "https://github.com/Cyrus580529/mem0-agent-memory-challenge"
+    },
+    {
+      "source_path": "/mnt/sv0/sean/research/mneme-api/.runtime/leaderboard-open-source/memmachine",
+      "head": "ab96a9d16e8caef89c222c361f47086e38688bf0",
+      "origin": "https://github.com/MemMachine/MemMachine"
+    }
+  ],
+  "core_repository": {
+    "path": "/mnt/sv0/sean/research/Mneme",
+    "origin": "git@github.com:FTP2026/Mneme.git",
+    "head": "bb8c0e5c6d14afe389b0fc530b4674061509e60d",
+    "note": "Separate research repository; existing changes were preserved. Relevant evaluator files are snapshotted under evaluation/archive/core_eval; no nested core repository is included."
+  }
+}

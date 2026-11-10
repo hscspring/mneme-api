@@ -1,0 +1,11 @@
+{
+  "submitted_at": "2026-10-29T05:17:43.392266+00:00",
+  "client_id": "mneme-api-2f2da3b5-751a-4a1e-8598-37a60387bbbb",
+  "http_status": 410,
+  "response": {
+    "detail": {
+      "code": "LEGACY_INTEGRATION_TEST_RETIRED",
+      "reason": "The legacy Add/Search compatibility test is retired for Cycle 2. Use the Evaluation page and select your track's Smoke mode with a bound key and version."
+    }
+  }
+}

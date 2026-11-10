@@ -167,3 +167,6 @@ python evaluation/replay.py requests.jsonl responses.jsonl --base-url http://127
 
 The output path must not already exist. Use a fresh user namespace for each
 independent replay. The tool records retrieval responses only.
+
+Evaluation reports, archived results, checksums, and reproduction instructions
+are indexed in [the delivery record](reports/delivery-20261110.md).

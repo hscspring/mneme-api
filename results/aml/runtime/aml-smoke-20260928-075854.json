@@ -1,0 +1,20 @@
+{
+  "request": {
+    "version_id": "version_c1c8603b53b5",
+    "benchmark_type": "textual",
+    "phase": "smoke",
+    "options": {
+      "max_add_concurrency": 16,
+      "search_concurrency": 16,
+      "top_k": 100
+    },
+    "run_label": "mneme-textual-smoke-20260928-075853"
+  },
+  "response": {
+    "evaluation_id": "teval_2ec303ce50b8cf5d",
+    "dispatch_id": null,
+    "phase": null,
+    "status": "queued",
+    "run_label": null
+  }
+}

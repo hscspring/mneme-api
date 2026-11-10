@@ -1,0 +1,45 @@
+{
+  "n": 500,
+  "methods": {
+    "mnemekit_0.8.3": {
+      "accuracy": 0.446,
+      "token_f1": 0.37865721491739524
+    },
+    "mnemekit_0.9.2": {
+      "accuracy": 0.494,
+      "token_f1": 0.407034108612906
+    }
+  },
+  "accuracy_delta": 0.048,
+  "token_f1_delta": 0.028376893695510726,
+  "wins": 42,
+  "losses": 18,
+  "ties": 440,
+  "sign_test_p": 0.002670436282807066,
+  "groups": {
+    "knowledge-update": {
+      "n": 78,
+      "accuracy_delta": 0.038461538461538464
+    },
+    "multi-session": {
+      "n": 133,
+      "accuracy_delta": 0.03759398496240601
+    },
+    "single-session-assistant": {
+      "n": 56,
+      "accuracy_delta": -0.03571428571428571
+    },
+    "single-session-preference": {
+      "n": 30,
+      "accuracy_delta": 0.1
+    },
+    "single-session-user": {
+      "n": 70,
+      "accuracy_delta": 0.02857142857142857
+    },
+    "temporal-reasoning": {
+      "n": 133,
+      "accuracy_delta": 0.09774436090225563
+    }
+  }
+}

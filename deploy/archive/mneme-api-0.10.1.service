@@ -1,0 +1,22 @@
+[Unit]
+Description=Mneme Add/Search API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=mneme
+Group=mneme
+WorkingDirectory=/opt/mneme-api-releases/0.3.0-6cd9420
+EnvironmentFile=/opt/mneme-api-releases/0.3.0-6cd9420/mneme-api.env.candidate
+ExecStart=/opt/mneme-api-releases/0.3.0-6cd9420/.venv/bin/uvicorn mneme_api.app:create_app --factory --host 127.0.0.1 --port 8001 --workers 1 --proxy-headers --forwarded-allow-ips=127.0.0.1
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/mneme-api-full2-20261030
+
+[Install]
+WantedBy=multi-user.target

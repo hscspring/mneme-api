@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-10",
+  "source_baseline_commit": "69cee92f819246512079acfa5289706d7bd201a1",
+  "api_version": "0.3.1",
+  "core_version": "0.10.2",
+  "checks": [
+    {"command": ".venv/bin/python -m pytest -q", "result": "11 passed, 1 warning in 9.87s", "exit_code": 0},
+    {"command": "uv lock --check --offline", "result": "Resolved 59 packages", "exit_code": 0},
+    {"command": ".venv/bin/python evaluation/verify_delivery.py", "result": "127 artifact checksums, JSON parsing, six paired prediction files and Full score arithmetic PASS", "exit_code": 0},
+    {"command": ".venv/bin/python -m compileall -q mneme_api evaluation", "result": "PASS", "exit_code": 0},
+    {"command": "git diff --check", "result": "PASS", "exit_code": 0}
+  ],
+  "warning": "Starlette TestClient httpx integration is deprecated; tests still pass.",
+  "environment": {"python": "3.13", "pytest": "9.2.0", "spacy": "3.8.18"},
+  "note": "The existing environment was used for API tests. No Full, Reader/Judge calls, production restart or schema migration was performed during closeout. This validation concerns API 0.3.1; official second Full used 0.3.0/0.10.1."
+}

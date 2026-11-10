@@ -6,7 +6,7 @@ __pycache__/
 .pytest_cache/
 .runtime/
 *.pem
-results/
 requests.jsonl
 search-metrics-*.jsonl
 *.env
+dist/

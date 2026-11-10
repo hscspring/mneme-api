@@ -1,0 +1,17 @@
+{
+  "request": {
+    "version_id": "version_c1c8603b53b5",
+    "benchmark_type": "textual",
+    "phase": "smoke",
+    "options": {
+      "max_add_concurrency": 16,
+      "search_concurrency": 16,
+      "top_k": 100
+    },
+    "run_label": "mneme-040-repeat-smoke-20260929-074156"
+  },
+  "response": {
+    "evaluation_id": "teval_bae5e3c585791bb2",
+    "status": "queued"
+  }
+}

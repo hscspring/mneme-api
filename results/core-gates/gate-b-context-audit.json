@@ -1,0 +1,33 @@
+{
+  "repository_head": "a8a706acbfcc4cdc516f0066e005eaf28f2ebb45",
+  "files": {
+    "gate-b-locomo-0.8.3-source40.jsonl": {
+      "sha256": "f0e9b12ef062744c0b1e12cd032bd7fd507b35d53d0c8f6c22bfae0921b7d464",
+      "bytes": 41724643
+    },
+    "gate-b-locomo-0.9.2.jsonl": {
+      "sha256": "617346da05547c81014afd5689f17bd3964d88ea4f9fb7ab9ca21b174aeef7e4",
+      "bytes": 43530392
+    },
+    "gate-b-lme-0.8.3.jsonl": {
+      "sha256": "b2c24f681416b5acf6f2972c79a2f9389f20c4ec0a3a77d11f303e60b6417284",
+      "bytes": 40018481
+    },
+    "gate-b-lme-0.8.3-source40-derived.jsonl": {
+      "sha256": "07947625f4ae0ed25327758f3c29a3cae725e09f3f555db77b5316cbffac8076",
+      "bytes": 30198323
+    },
+    "gate-b-lme-0.9.2.jsonl": {
+      "sha256": "8faec11630030c52e96898dc85f0fb1ffab6beb06d3d137540812cffb941d60b",
+      "bytes": 34771742
+    },
+    "package-gate-b/locomo/manifest.json": {
+      "sha256": "826670dc51b10ce57c66441fc87acefc3bd26e5d47f38dc873ba92502d39a639",
+      "bytes": 90
+    },
+    "package-gate-b/longmemeval/manifest.json": {
+      "sha256": "c1b1cac661f23c40af378c5f29778fa1de03c544a91a8ca09194ce351112da1f",
+      "bytes": 4020
+    }
+  }
+}

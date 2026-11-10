@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-10-10T04:49:06.826783+00:00",
+  "privacy": "Sanitized metadata only. Store, captured queries and stack dumps remain private and are excluded.",
+  "source": {
+    "host": "162.251.94.42",
+    "history_requests": 1112,
+    "pending_requests": 0
+  },
+  "files": {
+    "store.sqlite3": {
+      "bytes": 1687867392,
+      "mtime_epoch": 1791543795
+    },
+    "requests.sqlite3": {
+      "bytes": 19619840,
+      "mtime_epoch": 1791271135
+    },
+    "queries.json": {
+      "captures": 6
+    }
+  },
+  "consistency": {
+    "source_and_destination_size_match": true,
+    "source_and_destination_mtime_match": true,
+    "source_wal_bytes_at_discovery": 0,
+    "mneme_cold_open_seconds": 0.669,
+    "legacy": false,
+    "sqlite_quick_check": {
+      "store.sqlite3": "ok",
+      "requests.sqlite3": "ok",
+      "store_seconds": 1338.398,
+      "requests_seconds": 0.073
+    }
+  },
+  "versions": {
+    "production_mnemekit": "0.8.2",
+    "candidate_commit": "0e97cfd"
+  },
+  "query_capture": {
+    "method": "py-spy nonblocking stack snapshot of Memory.search_evidence query local",
+    "api_code_changed": false,
+    "service_restarted": false
+  }
+}

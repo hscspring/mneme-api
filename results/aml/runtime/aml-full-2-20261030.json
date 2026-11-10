@@ -1,0 +1,19 @@
+{
+  "submitted_at": "2026-10-30T15:01:46.556590+00:00",
+  "request": {
+    "version_id": "version_c1c8603b53b5",
+    "benchmark_type": "textual",
+    "phase": "full",
+    "options": {
+      "max_add_concurrency": 16,
+      "search_concurrency": 16,
+      "top_k": 100
+    },
+    "run_label": "mneme-v0.1-full-2-20261030"
+  },
+  "http_status": 200,
+  "response": {
+    "evaluation_id": "teval_609f7914223b606d",
+    "status": "queued"
+  }
+}

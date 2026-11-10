@@ -1,0 +1,18 @@
+{
+  "source": ".runtime/full-archive-20261010/search-metrics.jsonl",
+  "source_sha256": "e38a0c2d042ca9d6c7c1e8e9f84f3fa95bdc594420892f89595bd04cce70b442",
+  "records": 10807,
+  "first": "2026-09-29T15:09:21.707333+00:00",
+  "last": "2026-10-11T01:53:16.633783+00:00",
+  "total_ms_quantiles": {
+    "0.5": 1330.451,
+    "0.95": 152871.99659999952,
+    "0.99": 382489.22932000016
+  },
+  "max_total_ms": 3627193.57,
+  "max_evidence_tokens": 4845330,
+  "max_response_tokens": 5467955,
+  "evolution_calls": 0,
+  "evolution_route_recorded": false,
+  "evolution_sources": 0
+}

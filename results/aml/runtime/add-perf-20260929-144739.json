@@ -1,0 +1,180 @@
+{
+  "input": {
+    "requests": 140,
+    "users": 27,
+    "bytes": 628008
+  },
+  "wall_seconds": 238.48773671779782,
+  "request_seconds": {
+    "mean": 10.281817332039854,
+    "p50": 7.903531224932522,
+    "p95": 28.983006321825087,
+    "p99": 34.60524731595069,
+    "max": 41.077746709343046,
+    "over_30s": 6,
+    "over_60s": 0,
+    "over_300s": 0
+  },
+  "slowest": [
+    {
+      "request_index": 3,
+      "messages": 1,
+      "chars": 7987,
+      "history_messages": 4,
+      "history_chars": 20166,
+      "seconds": 41.077746709343046
+    },
+    {
+      "request_index": 2,
+      "messages": 2,
+      "chars": 11153,
+      "history_messages": 3,
+      "history_chars": 12179,
+      "seconds": 37.80972608970478
+    },
+    {
+      "request_index": 3,
+      "messages": 20,
+      "chars": 4829,
+      "history_messages": 40,
+      "history_chars": 8990,
+      "seconds": 34.60524731595069
+    },
+    {
+      "request_index": 1,
+      "messages": 8,
+      "chars": 5995,
+      "history_messages": 8,
+      "history_chars": 5995,
+      "seconds": 33.590701691806316
+    },
+    {
+      "request_index": 1,
+      "messages": 18,
+      "chars": 8802,
+      "history_messages": 18,
+      "history_chars": 8802,
+      "seconds": 32.1044907909818
+    },
+    {
+      "request_index": 3,
+      "messages": 20,
+      "chars": 2875,
+      "history_messages": 60,
+      "history_chars": 9371,
+      "seconds": 31.8434847779572
+    },
+    {
+      "request_index": 1,
+      "messages": 20,
+      "chars": 4478,
+      "history_messages": 20,
+      "history_chars": 4478,
+      "seconds": 29.585810113232583
+    },
+    {
+      "request_index": 1,
+      "messages": 20,
+      "chars": 7823,
+      "history_messages": 20,
+      "history_chars": 7823,
+      "seconds": 28.983006321825087
+    },
+    {
+      "request_index": 2,
+      "messages": 20,
+      "chars": 3277,
+      "history_messages": 40,
+      "history_chars": 7755,
+      "seconds": 28.009823913220316
+    },
+    {
+      "request_index": 3,
+      "messages": 20,
+      "chars": 5004,
+      "history_messages": 55,
+      "history_chars": 10800,
+      "seconds": 27.544909844640642
+    },
+    {
+      "request_index": 1,
+      "messages": 1,
+      "chars": 5388,
+      "history_messages": 1,
+      "history_chars": 5388,
+      "seconds": 27.234213440213352
+    },
+    {
+      "request_index": 3,
+      "messages": 20,
+      "chars": 3443,
+      "history_messages": 60,
+      "history_chars": 11198,
+      "seconds": 27.15460035391152
+    },
+    {
+      "request_index": 3,
+      "messages": 2,
+      "chars": 4839,
+      "history_messages": 11,
+      "history_chars": 12355,
+      "seconds": 25.345861812587827
+    },
+    {
+      "request_index": 1,
+      "messages": 20,
+      "chars": 2874,
+      "history_messages": 20,
+      "history_chars": 2874,
+      "seconds": 25.30596779799089
+    },
+    {
+      "request_index": 1,
+      "messages": 1,
+      "chars": 6035,
+      "history_messages": 1,
+      "history_chars": 6035,
+      "seconds": 25.129908645059913
+    },
+    {
+      "request_index": 2,
+      "messages": 20,
+      "chars": 5451,
+      "history_messages": 40,
+      "history_chars": 13274,
+      "seconds": 24.915098309982568
+    },
+    {
+      "request_index": 2,
+      "messages": 8,
+      "chars": 2266,
+      "history_messages": 20,
+      "history_chars": 4161,
+      "seconds": 24.189019898418337
+    },
+    {
+      "request_index": 3,
+      "messages": 20,
+      "chars": 2591,
+      "history_messages": 60,
+      "history_chars": 8160,
+      "seconds": 23.896270346362144
+    },
+    {
+      "request_index": 2,
+      "messages": 20,
+      "chars": 2649,
+      "history_messages": 40,
+      "history_chars": 6496,
+      "seconds": 23.65818514721468
+    },
+    {
+      "request_index": 1,
+      "messages": 5,
+      "chars": 8677,
+      "history_messages": 5,
+      "history_chars": 8677,
+      "seconds": 22.21016405383125
+    }
+  ]
+}

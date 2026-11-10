@@ -1,0 +1,74 @@
+{
+  "protocol": {
+    "dataset": "MemOps heldout",
+    "comparison": [
+      "mnemekit_0.8.3",
+      "mnemekit_0.9.2"
+    ],
+    "reader_input_token_budget": 24000,
+    "retrieval_top_k": 100,
+    "source_admission": "complete Evidence items",
+    "reader_prompt": "memops_answer_v1",
+    "judge_prompt": "memops_released_rubric_v1"
+  },
+  "context_audit": {
+    "questions": 5,
+    "changed_contexts": 5,
+    "identical_contexts": 0,
+    "mean_evidence_n": {
+      "mnemekit_0.8.3": 2.4,
+      "mnemekit_0.9.2": 71.8
+    },
+    "mean_source_n": {
+      "mnemekit_0.8.3": 74.0,
+      "mnemekit_0.9.2": 71.8
+    },
+    "max_input_tokens": {
+      "mnemekit_0.8.3": 23944,
+      "mnemekit_0.9.2": 23995
+    }
+  },
+  "answer_evaluation": {
+    "repetitions": [
+      {
+        "n": 5,
+        "methods": {
+          "mnemekit_0.8.3": {
+            "accuracy": 0.2,
+            "token_f1": 0.04403669724770641
+          },
+          "mnemekit_0.9.2": {
+            "accuracy": 0.0,
+            "token_f1": 0.029268292682926828
+          }
+        },
+        "accuracy_delta": -0.2,
+        "token_f1_delta": -0.014768404564779587,
+        "wins": 0,
+        "losses": 1,
+        "ties": 4,
+        "sign_test_p": 1.0,
+        "operations": {
+          "Reflect": {
+            "n": 5,
+            "accuracy_delta": -0.2
+          }
+        }
+      }
+    ],
+    "aggregate": {
+      "accuracy_delta_mean": -0.2,
+      "accuracy_delta_std": 0.0,
+      "accuracy_mean": {
+        "mnemekit_0.8.3": 0.2,
+        "mnemekit_0.9.2": 0.0
+      },
+      "wins_mean": 0.0,
+      "losses_mean": 1.0
+    }
+  },
+  "models": {
+    "reader": "Qwen/Qwen3.6-27B",
+    "judge": "MiniMax-M3"
+  }
+}

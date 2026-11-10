@@ -1,0 +1,17 @@
+{
+  "request": {
+    "version_id": "version_c1c8603b53b5",
+    "benchmark_type": "textual",
+    "phase": "full",
+    "options": {
+      "max_add_concurrency": 16,
+      "search_concurrency": 16,
+      "top_k": 100
+    },
+    "run_label": "mneme-040-full-1-20260930-143954"
+  },
+  "response": {
+    "evaluation_id": "teval_9abcb4ed9849697f",
+    "status": "queued"
+  }
+}
