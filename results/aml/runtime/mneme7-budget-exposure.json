@@ -1,0 +1,77 @@
+{
+  "status": "development exposure audit; no quality conclusion",
+  "source": "results/aml/full2-search-metrics.jsonl",
+  "source_sha256": "afa56f6d8665f69fba3da67d313e02e605bd99bea41670a81c3366814b43e998",
+  "rows": 10292,
+  "evidence_tokens": {
+    "min": 0,
+    "p25": 10361.5,
+    "p50": 14397.5,
+    "p75": 34408.25,
+    "p90": 71467.39999999998,
+    "p95": 99947.45,
+    "max": 100000,
+    "mean": 26405.441507967353
+  },
+  "item_count": {
+    "min": 0,
+    "p25": 20.0,
+    "p50": 100.0,
+    "p75": 100.0,
+    "p90": 100.0,
+    "p95": 100.0,
+    "max": 100,
+    "mean": 70.24300427516518
+  },
+  "item_cap": {
+    "n": 5987,
+    "rate": 0.5817139525845316
+  },
+  "evolution_route": {
+    "n": 8048,
+    "rate": 0.7819665759813448,
+    "evidence_tokens": {
+      "p50": 16172.0,
+      "p90": 99890.0,
+      "p95": 99974.0,
+      "mean": 28028.432032803183
+    }
+  },
+  "budgets": {
+    "8000": {
+      "affected_n": 7947,
+      "affected_rate": 0.7721531286436066,
+      "hypothetical_token_reduction": 0.7508271122554928,
+      "route_affected_rate": 0.8613320079522863,
+      "non_route_affected_rate": 0.4523172905525847
+    },
+    "16000": {
+      "affected_n": 4772,
+      "affected_rate": 0.4636610959968908,
+      "hypothetical_token_reduction": 0.5533000402804183,
+      "route_affected_rate": 0.5042246520874751,
+      "non_route_affected_rate": 0.3181818181818182
+    },
+    "24000": {
+      "affected_n": 3403,
+      "affected_rate": 0.33064516129032256,
+      "hypothetical_token_reduction": 0.44055810479417346,
+      "route_affected_rate": 0.34107852882703776,
+      "non_route_affected_rate": 0.29322638146167557
+    },
+    "48000": {
+      "affected_n": 1567,
+      "affected_rate": 0.1522541780023319,
+      "hypothetical_token_reduction": 0.21390780610428128,
+      "route_affected_rate": 0.12984592445328033,
+      "non_route_affected_rate": 0.232620320855615
+    },
+    "100000": {
+      "affected_n": 0,
+      "affected_rate": 0.0,
+      "hypothetical_token_reduction": 0.0,
+      "route_affected_rate": 0.0,
+      "non_route_affected_rate": 0.0
+    }
+  }
+}
